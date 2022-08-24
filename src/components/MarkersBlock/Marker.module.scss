@@ -1,0 +1,22 @@
+.markersBlock {
+  &_marker {
+    margin: 0;
+    padding: 6px 17px;
+    line-height: 1em;
+    background: linear-gradient(180deg, rgba(255,214,99,1) 0%, rgba(255,197,37,1) 100%);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  &_leftCorner {
+    position: absolute;
+    top: 29px;
+    left: 0;
+  }
+
+  &_rightCorner {
+    position: absolute;
+    top: 29px;
+    right: 0;
+  }
+}

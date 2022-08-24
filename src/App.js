@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import BackgroundVideo from "./components/BackgroundVideo/BackgroundVideo";
+// import IntroBlock from "./components/IntroBlock/IntroBlock";
+import EnterpriseBlock from "./components/EnterpriseBlock/EnterpriseBlock";
+import MarkersBlock from "./components/MarkersBlock/MarkersBlock";
+// import ImageShow from "./components/ImageShow/ImageShow";
+// import VacanciesList from "./components/VacaciesList/VacanciesList";
 
 function App() {
+  // let couter = 0;
+  // console.log(couter++);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BackgroundVideo />
+      {/*<IntroBlock />*/}
+      <MarkersBlock />
+      <EnterpriseBlock />
+      {/*<ImageShow />*/}
+      {/*<VacanciesList />*/}
     </div>
   );
 }

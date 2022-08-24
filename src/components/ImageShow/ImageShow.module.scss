@@ -1,0 +1,10 @@
+.ImageShow {
+  &_bg {
+    z-index: 100;
+  }
+
+  &_img {
+    z-index: 101;
+    height: 80%;
+  }
+}
