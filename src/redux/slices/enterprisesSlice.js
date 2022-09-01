@@ -6,15 +6,6 @@ import asacha from "../../assets/Asachinskoe/information";
 import baranjevskoe from "../../assets/Baranjevskoe/information";
 import ksm from "../../assets/Kamchatstroymateriali/information";
 import kymroch from "../../assets/Kymroch/information";
-import vacancies from "../../assets/vacancies";
-
-// const vacanciesMap = {
-//   ametist: ,
-//   asacha: ,
-//   baranjevskoe: ,
-//   ksm: ,
-//   kymroch: ,
-// }
 
 const initialState = {
   enterprises: {
@@ -40,14 +31,11 @@ export const enterprisesSlice = createSlice({
         ({ id }) => id === Number(action.payload)
       );
     },
-    setVacancies: (state, action) => {
-      state.enterprises[action.payload].vacancies = vacancies;
-    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { updateEnterprise, setCurrent, setVacancies } =
-  enterprisesSlice.actions;
+export const selectCurrentEnterprise = (state) => state.enterprisesInfo.current;
+
+export const { updateEnterprise, setCurrent } = enterprisesSlice.actions;
 
 export default enterprisesSlice.reducer;

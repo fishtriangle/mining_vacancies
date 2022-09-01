@@ -8,6 +8,7 @@ import {
   hideRightBlock,
   showRightBlock,
   setEnterprise,
+  selectRightBlockIsHide,
 } from "../../redux/slices/rightBlockSlice";
 import { setCurrent } from "../../redux/slices/enterprisesSlice";
 
@@ -15,7 +16,7 @@ function Marker({ value, position, corner, id }) {
   const [width, setWidth] = useState(0);
   const markerLabel = useRef();
   const dispatch = useDispatch();
-  const isClosed = useSelector((state) => state.rightBlock.isHide);
+  const isClosed = useSelector(selectRightBlockIsHide);
 
   function handleClick(id) {
     dispatch(hideRightBlock());

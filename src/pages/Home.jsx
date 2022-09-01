@@ -4,15 +4,17 @@ import MarkersBlock from "../components/MarkersBlock/MarkersBlock";
 import RightSlidingBlock from "../components/RightSlidingBlock/RightSlidingBlock";
 import ImageShow from "../components/ImageShow/ImageShow";
 import VacanciesBlock from "../components/VacaciesList/VacanciesBlock";
+import { selectImage } from "../redux/slices/fullScreenImageSlice";
+import { selectCurrentId } from "../redux/slices/vacanciesSlice";
 
 function Home() {
-  const fullScreenImage = useSelector((state) => state.fullScreenImage.image);
-  const currentId = useSelector((state) => state.vacancies.currentId);
+  const { image } = useSelector(selectImage);
+  const currentId = useSelector(selectCurrentId);
   return (
     <>
       <MarkersBlock />
       <RightSlidingBlock />
-      {fullScreenImage && <ImageShow />}
+      {image && <ImageShow />}
       {currentId && <VacanciesBlock />}
     </>
   );

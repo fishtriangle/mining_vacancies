@@ -11,9 +11,10 @@ import EnterpriseDescription from "./EnterpriseDescription";
 import styles from "./EnterpriseBlock.module.scss";
 import closeBtnImg from "./img/close.png";
 import { setCurrentId } from "../../redux/slices/vacanciesSlice";
+import { selectCurrentEnterprise } from "../../redux/slices/enterprisesSlice";
 
 function EnterpriseBlock() {
-  const enterprisesInfo = useSelector((state) => state.enterprisesInfo.current);
+  const enterprisesInfo = useSelector(selectCurrentEnterprise);
 
   const { photos, title, logo, id } = enterprisesInfo;
 

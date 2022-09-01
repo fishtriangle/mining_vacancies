@@ -3,9 +3,10 @@ import { useQuery } from "@apollo/client";
 import { GET_ONE_ENTERPRISE } from "../../graphql/query/enterpriseVacancies";
 
 import Text from "../Text/Text";
+import { selectCurrentId } from "../../redux/slices/vacanciesSlice";
 
 function VacanciesList() {
-  const currentId = useSelector((state) => state.vacancies.currentId);
+  const currentId = useSelector(selectCurrentId);
 
   const { data, loading, error } = useQuery(GET_ONE_ENTERPRISE, {
     variables: {

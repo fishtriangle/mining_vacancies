@@ -4,18 +4,18 @@ import { useEffect } from "react";
 import styles from "./VacanciesBlock.module.scss";
 import {
   resetVacancies,
+  selectIsVacanciesShown,
   showVacancies,
 } from "../../redux/slices/vacanciesSlice";
 import VacanciesList from "./VacanciesList";
+import { selectCurrentEnterprise } from "../../redux/slices/enterprisesSlice";
 
 function VacanciesBlock() {
   const dispatch = useDispatch();
 
-  const isVacanciesShown = useSelector(
-    (state) => state.vacancies.isVacanciesShown
-  );
+  const isVacanciesShown = useSelector(selectIsVacanciesShown);
 
-  const { title } = useSelector((state) => state.enterprisesInfo.current);
+  const { title } = useSelector(selectCurrentEnterprise);
 
   useEffect(() => {
     setTimeout(() => dispatch(showVacancies()), 0);

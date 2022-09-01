@@ -1,16 +1,16 @@
 import styles from "./ImageShow.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { resetImage, showImage } from "../../redux/slices/fullScreenImageSlice";
+import {
+  resetImage,
+  selectImage,
+  showImage,
+} from "../../redux/slices/fullScreenImageSlice";
 import { useEffect } from "react";
 
 function ImageShow() {
   const dispatch = useDispatch();
 
-  const image = useSelector((state) => state.fullScreenImage.image);
-  const alt = useSelector((state) => state.fullScreenImage.alt);
-  const isImageShown = useSelector(
-    (state) => state.fullScreenImage.isImageShown
-  );
+  const { image, alt, isImageShown } = useSelector(selectImage);
 
   useEffect(() => {
     setTimeout(() => dispatch(showImage()), 0);

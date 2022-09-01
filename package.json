@@ -9,20 +9,18 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.0",
+    "concurrently": "^7.3.0",
     "csv-parse": "^5.3.0",
-    "final-form": "^4.20.7",
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "nuka-carousel": "^5.2.0",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-dropzone": "^14.2.2",
-    "react-final-form": "^6.5.9",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "sass": "^1.54.4",
+    "serve": "^14.0.1",
     "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -30,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "run-build": "concurrently \"serve -s build\" \"cd ../mining_vacancies_back && node index\" \"start explorer.exe .\\Kiosk.lnk\""
   },
   "eslintConfig": {
     "extends": [

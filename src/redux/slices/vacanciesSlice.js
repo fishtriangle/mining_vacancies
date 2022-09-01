@@ -22,7 +22,10 @@ export const vacancies = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+export const selectCurrentId = (state) => state.vacancies.currentId;
+export const selectIsVacanciesShown = (state) =>
+  state.vacancies.isVacanciesShown;
+
 export const { setCurrentId, showVacancies, resetVacancies } =
   vacancies.actions;
 

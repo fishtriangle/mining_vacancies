@@ -25,7 +25,10 @@ export const fullScreenImage = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+export const selectImage = (state) => state.fullScreenImage;
+export const selectAlt = (state) => state.fullScreenImage.alt;
+export const selectImageIsShown = (state) => state.fullScreenImage.isImageShown;
+
 export const { setImage, resetImage, showImage } = fullScreenImage.actions;
 
 export default fullScreenImage.reducer;
