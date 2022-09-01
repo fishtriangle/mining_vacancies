@@ -1,0 +1,14 @@
+.rightSlidingBlock {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 960px;
+  height: 100%;
+  transition: margin 1s;
+  margin: 0;
+
+  &__closed {
+    margin-right: -1000px;
+  }
+}

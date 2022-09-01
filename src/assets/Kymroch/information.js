@@ -1,66 +1,42 @@
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
-import photo4 from "./photos/4.jpg";
+import smallPhoto1 from "./photos/small/1.jpg";
+import smallPhoto2 from "./photos/small/2.jpg";
+import smallPhoto3 from "./photos/small/3.jpg";
+import smallPhoto4 from "./photos/small/4.jpg";
+import largePhoto1 from "./photos/large/1.jpg";
+import largePhoto2 from "./photos/large/2.jpg";
+import largePhoto3 from "./photos/large/3.jpg";
+import largePhoto4 from "./photos/large/4.jpg";
 import logo from "./logo.png";
 
 const info = {
   id: 5,
-  title: "АО КСМ",
-  Article: () => (
-    <article>
-      <p>
-        АО «Быстринская горная компания» является недропользователем и
-        оператором проекта <b>«Кумроч»</b>.
-      </p>
-      <p>
-        Кумроч — одно из крупнейших месторождений Камчатского края. Рудное поле
-        расположено в восточной части Камчатского полуострова на территории
-        Усть-Камчатского района.
-      </p>
-      <p>
-        Проект «Кумроч» предусматривает создание к 2026 году современного
-        высокотехнологичного горно- обогатительного комбината для добычи золота
-        на территории Камчатского края, это позволит создать около 1000 рабочих
-        мест.
-      </p>
-      <p>
-        По вопросам трудоустройства Вы можете обратиться по телефонам:
-        <br />
-        <b>+ 7 962 082 23 51</b>
-        <br />
-        <b>+7 914 620 07 99</b>
-        <br />
-        <b>+7 914 990 22 15</b>
-      </p>
-      <p>
-        Более подробную информацию о нашей компании можно получить на сайте:{" "}
-        <b>https://kumroch.ru/</b>
-      </p>
-    </article>
-  ),
+  title: 'АО "Быстринская горная компания"',
   photos: [
     {
-      data: photo1,
+      small: smallPhoto1,
+      large: largePhoto1,
       alt: "Прилетела новая вахта",
     },
     {
-      data: photo2,
+      small: smallPhoto2,
+      large: largePhoto2,
       alt: "На объекте",
     },
     {
-      data: photo3,
+      small: smallPhoto3,
+      large: largePhoto3,
       alt: "Вертолет",
     },
     {
-      data: photo4,
+      small: smallPhoto4,
+      large: largePhoto4,
       alt: "Поселок",
     },
   ],
   logo,
   marker: {
     value: "Кумроч",
-    position: { top: 675, left: 390 },
+    position: { top: 65.5, left: 20.5 },
     corner: "left",
   },
 };

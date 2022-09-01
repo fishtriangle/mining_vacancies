@@ -1,21 +1,42 @@
+import { Route, Routes } from "react-router-dom";
+
 import BackgroundVideo from "./components/BackgroundVideo/BackgroundVideo";
-// import IntroBlock from "./components/IntroBlock/IntroBlock";
-import EnterpriseBlock from "./components/EnterpriseBlock/EnterpriseBlock";
-import MarkersBlock from "./components/MarkersBlock/MarkersBlock";
-// import ImageShow from "./components/ImageShow/ImageShow";
-// import VacanciesList from "./components/VacaciesList/VacanciesList";
+import Home from "./pages/Home";
+import Edit from "./pages/Edit";
+import BackgroundMusic from "./components/BackgroundMusic/BackgroundMusic";
+import _ from "lodash";
+import { useDispatch } from "react-redux";
+import {
+  hideRightBlock,
+  setIntro,
+  showRightBlock,
+} from "./redux/slices/rightBlockSlice";
+import { resetImage } from "./redux/slices/fullScreenImageSlice";
+import { resetVacancies } from "./redux/slices/vacanciesSlice";
 
 function App() {
-  // let couter = 0;
-  // console.log(couter++);
+  const dispatch = useDispatch();
+  const reset = _.debounce(() => {
+    dispatch(hideRightBlock());
+    setTimeout(() => {
+      dispatch(setIntro());
+      dispatch(showRightBlock());
+    }, 2500);
+
+    dispatch(resetImage());
+
+    dispatch(resetVacancies());
+  }, 180000);
+
   return (
-    <div className="App">
+    <div className="App" onClick={() => reset()}>
       <BackgroundVideo />
-      {/*<IntroBlock />*/}
-      <MarkersBlock />
-      <EnterpriseBlock />
-      {/*<ImageShow />*/}
-      {/*<VacanciesList />*/}
+
+      <Routes>
+        <Route path={"/"} element={<Home />} />
+        <Route path={"edit"} element={<Edit />} />
+      </Routes>
+      <BackgroundMusic />
     </div>
   );
 }

@@ -1,0 +1,16 @@
+.BackgroundMusic {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  width: 70px;
+  height: 70px;
+
+  &_icon {
+    &__active {
+      fill: #ffe59d;
+    }
+    &__notActive {
+      fill: #a68733;
+    }
+  }
+}

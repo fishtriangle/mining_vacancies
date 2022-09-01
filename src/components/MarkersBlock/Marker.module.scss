@@ -9,14 +9,14 @@
   }
 
   &_leftCorner {
-    position: absolute;
-    top: 29px;
+    position: relative;
+    top: -7px;
     left: 0;
   }
 
   &_rightCorner {
-    position: absolute;
-    top: 29px;
-    right: 0;
+    position: relative;
+    top: -7px;
+    right: calc(-100% + 16px);
   }
 }

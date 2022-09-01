@@ -1,36 +1,25 @@
 .enterpriseBlock {
-  padding: 80px 100px 0 0;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: margin 1s;
-  margin: 0 0 0 1000px;
-
-
-  //w-50 position-absolute end-0 d-flex flex-column
-
-  &__closed {
-    margin-left: 2000px;
-  }
 
   &_container {
     position: relative;
     width: 820px;
     display: flex;
     flex-direction: column;
+    padding: 80px 80px 0 80px;
   }
 
   &_highlandLogo {
-    height: 75px;
+    height: 60px;
   }
 
   &_closeBtn {
     width: 30px;
     height: 30px;
+    cursor: pointer;
   }
 
   &_carousel {
-    width: calc(100% + 70px)!important;
+    //width: calc(100% + 70px)!important;
   }
 
   &_carouselContainer {
@@ -56,6 +45,7 @@
 
   &_carouselDotsContainer {
     top: 40px!important;
+    right: 10px;
   }
 
   &_vacancyBtn {

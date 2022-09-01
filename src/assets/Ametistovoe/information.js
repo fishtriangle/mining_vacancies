@@ -1,57 +1,35 @@
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
+import smallPhoto1 from "./photos/small/1.jpg";
+import smallPhoto2 from "./photos/small/2.jpg";
+import smallPhoto3 from "./photos/small/3.jpg";
+import largePhoto1 from "./photos/large/1.jpg";
+import largePhoto2 from "./photos/large/2.jpg";
+import largePhoto3 from "./photos/large/3.jpg";
 import logo from "./logo.png";
 
 const info = {
   id: 1,
   title: 'АО "Аметистовое"',
-  Article: () => (
-    <article>
-      <p>
-        Золоторудное месторождение Аметистовое в Пенжинском районе Камчатского
-        края открыто в <b>1967</b> году. Отработка месторождения началась в{" "}
-        <b>2012</b> году открытым способом, на полную производственную мощность
-        предприятие вышло в <b>2016-м</b> . Инфраструктура ГОКа включает
-        обогатительную фабрику мощностью <b>660</b> тысяч тонн руды/год,
-        вахтовый посёлок на <b>700</b> человек, склады и прочие объекты,
-        необходимые для ведения горных работ и переработки руды. С <b>2019</b>{" "}
-        года добыча руды также ведётся подземным способом.
-      </p>
-      <p>
-        Лицензия на разработку месторождения Аметистовое принадлежит АО
-        «Аметистовое», которое было приобретено компанией <b>Highland Gold</b> в{" "}
-        <b>2021</b> году. Всего на предприятии работает более <b>1200</b>{" "}
-        человек. Вахта длится <b>90</b> дней. На территории посёлка есть доступ
-        в интернет. Для сотрудников оборудованы спортзал и комнаты отдыха.
-      </p>
-      <p>
-        По вопросам трудоустройства обращаться по телефонам:
-        <br />
-        <b>+7 (914) 020-63-27</b> (Надежда Евгеньевна Селезнева),
-        <br />
-        <b>+7 (924) 790-49-63</b> (Екатерина Сергеевна Воронова).
-      </p>
-    </article>
-  ),
   photos: [
     {
-      data: photo1,
+      small: smallPhoto1,
+      large: largePhoto1,
       alt: "Поселок",
     },
     {
-      data: photo2,
+      small: smallPhoto2,
+      large: largePhoto2,
       alt: "На заводе",
     },
     {
-      data: photo3,
+      small: smallPhoto3,
+      large: largePhoto3,
       alt: "В шахте",
     },
   ],
   logo,
   marker: {
     value: "Аметистовое",
-    position: { top: 230, left: 505 },
+    position: { top: 22.5, left: 26.5 },
     corner: "left",
   },
 };

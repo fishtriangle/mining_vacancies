@@ -1,84 +1,64 @@
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
-import photo4 from "./photos/4.jpg";
-import photo5 from "./photos/5.jpg";
-import photo6 from "./photos/6.jpg";
-import photo7 from "./photos/7.jpg";
-import photo8 from "./photos/8.jpg";
+import smallPhoto1 from "./photos/small/1.jpg";
+import smallPhoto2 from "./photos/small/2.jpg";
+import smallPhoto3 from "./photos/small/3.jpg";
+import smallPhoto4 from "./photos/small/4.jpg";
+import smallPhoto5 from "./photos/small/5.jpg";
+import smallPhoto6 from "./photos/small/6.jpg";
+import smallPhoto7 from "./photos/small/7.jpg";
+import largePhoto1 from "./photos/large/1.jpg";
+import largePhoto2 from "./photos/large/2.jpg";
+import largePhoto3 from "./photos/large/3.jpg";
+import largePhoto4 from "./photos/large/4.jpg";
+import largePhoto5 from "./photos/large/5.jpg";
+import largePhoto6 from "./photos/large/6.jpg";
+import largePhoto7 from "./photos/large/7.jpg";
+
 import logo from "./logo.png";
 
 const info = {
   id: 4,
   title: "АО КСМ",
-  Article: () => (
-    <article>
-      <p>
-        <b>АО «Камчатскстройматериалы»</b> – старейшее горнодобывающее
-        предприятие Камчатского края. Оно было создано в 1967 году, когда в
-        регионе началось интенсивное жилищное и промышленное строительство. В
-        1993 году предприятие реорганизовалось в акционерное общество.
-      </p>
-      <p>
-        <b>АО «Камчатскстройматериалы»</b> ведёт добычные работы на
-        месторождении строительного песка «Халактырка-1» (северо-восточный
-        фланг) и месторождении строительного камня «Сопка Петровская». В
-        процессе добычи минерального сырья и его переработки производятся
-        бутовый камень различных фракций, щебень из камня, отсев от дробления и
-        строительный песок.
-      </p>
-      <p>
-        <b>АО «Камчатскстройматериалы»</b> занимает лидирующее положение в
-        регионе по добыче и производству природных строительных материалов.
-        Предприятие уже более полувека принимает самое активное участие в{" "}
-        строительстве и реконструкции важных объектов, имеющих стратегическое
-        значение для Камчатского края.
-      </p>
-      <p>
-        По вопросам трудоустройства обращаться по телефону:
-        <br />
-        <b>+7 (962) 292-44-41</b> (Лилия Николаевна Дюк).
-      </p>
-    </article>
-  ),
   photos: [
     {
-      data: photo1,
+      small: smallPhoto1,
+      large: largePhoto1,
       alt: "Конвейеры",
     },
     {
-      data: photo2,
+      small: smallPhoto2,
+      large: largePhoto2,
       alt: "Работа тяжелой техники",
     },
     {
-      data: photo3,
+      small: smallPhoto3,
+      large: largePhoto3,
       alt: "Работа тяжелой техники",
     },
     {
-      data: photo4,
+      small: smallPhoto4,
+      large: largePhoto4,
       alt: "Бульдозер",
     },
     {
-      data: photo5,
+      small: smallPhoto5,
+      large: largePhoto5,
       alt: "Колотый камень",
     },
     {
-      data: photo6,
+      small: smallPhoto6,
+      large: largePhoto6,
       alt: "Парковка бульдозеров",
     },
     {
-      data: photo7,
+      small: smallPhoto7,
+      large: largePhoto7,
       alt: "Сбор песка",
-    },
-    {
-      data: photo8,
-      alt: "Экскаватор",
     },
   ],
   logo,
   marker: {
     value: "Камчатскстройматериалы",
-    position: { top: 863, left: 292 },
+    position: { top: 81, left: 15.3 },
     corner: "left",
   },
 };

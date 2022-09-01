@@ -1,0 +1,65 @@
+.VacanciesList {
+  :nth-child(n) {
+    z-index: 51;
+  }
+  :first-child {
+    z-index: 50;
+  }
+
+  &_content {
+    transition: 0.5s;
+    transform: scale(0.8);
+    opacity: 0;
+
+    &__show {
+      transform: scale(1)!important;
+      opacity: 1;
+    }
+  }
+
+  &_tableHead {
+    margin: 0 30px 0 0;
+
+    table {
+      margin: 10px 0;
+    }
+
+    tr {
+      :nth-child(1) {
+        width: 39px;
+      }
+      :nth-child(2) {
+        width: 489px;
+      }
+      :nth-child(3) {
+        width: 668px;
+      }
+    }
+  }
+
+  &_tableBody {
+    height: 820px;
+    overflow-y: scroll;
+    padding-right: 25px;
+
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #42403a;
+      border-radius: 20px;
+      border: 9px;
+      border-color: black;
+
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ffe59d;
+      border-radius: 15px;
+      border: 1px;
+    }
+  }
+
+
+}

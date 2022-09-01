@@ -1,57 +1,35 @@
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
-
+import smallPhoto1 from "./photos/small/1.jpg";
+import smallPhoto2 from "./photos/small/2.jpg";
+import smallPhoto3 from "./photos/small/3.jpg";
+import largePhoto1 from "./photos/large/1.jpg";
+import largePhoto2 from "./photos/large/2.jpg";
+import largePhoto3 from "./photos/large/3.jpg";
 import logo from "./logo.png";
 
 const info = {
   id: 2,
   title: 'АО "ТСГ АСАЧА"',
-  Article: () => (
-    <article>
-      <p>
-        <b>АО «ТСГ Асача»</b> разрабатывает Асачинское золотосеребряное
-        месторождение в Елизовском районе Камчатского края. С 2021 года
-        предприятие входит в состав группы <b>Highland Gold</b>.
-      </p>
-      <p>
-        Асачинское месторождение открыто в 1973 году. В 2005 году здесь начались
-        работы по строительству предприятия, а в 2011-м введена в эксплуатацию
-        ЗИФ (золотоизвлекательная фабрика) мощностью до 150 тысяч тонн руды в
-        год. В 2014 году Асачинская ЗИФ вышла на проектный уровень переработки
-        руды.
-      </p>
-      <p>
-        На территории расположен вахтовый посёлок на 350 человек. Есть доступ в
-        интернет, спортзал, баскетбольно-волейбольная площадка и места для
-        отдыха сотрудников. Всего в АО «ТСГ Асача» работает более 600 человек,
-        вахта длится 60 дней.
-      </p>
-      <p>
-        По вопросам трудоустройства обращаться по телефонам: <br />
-        <b>+7 (909) 880-14-47</b> (Ирина Михайловна Кравченко), <br />
-        <b>+7 (909) 836-23-79</b> (Валерий Сергеевич Свекровкин).
-      </p>
-    </article>
-  ),
   photos: [
     {
-      data: photo1,
+      small: smallPhoto1,
+      large: largePhoto1,
       alt: "Дорога к месторождению",
     },
     {
-      data: photo2,
+      small: smallPhoto2,
+      large: largePhoto2,
       alt: "Слиток золота",
     },
     {
-      data: photo3,
+      small: smallPhoto3,
+      large: largePhoto3,
       alt: "Рабочий поселок",
     },
   ],
   logo,
   marker: {
     value: "Асачинское",
-    position: { top: 907, left: 252 },
+    position: { top: 85, left: 13 },
     corner: "right",
   },
 };

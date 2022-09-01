@@ -15,17 +15,26 @@
 //  font-family: 'Arial';
 //  src: url('../fonts/Arial/arial.ttf');
 //}
+//
+//* {
+//  overflow: hidden;
+//}
 
 body {
   height: 100vh;
 
-  overflow-y: hidden;
-  background-color: $gray-base;
+  overflow: hidden;
+  background-color: black;
 
   font-family: Montserrat;
   color: $primary;
 
 }
+
+#root {
+  overflow: hidden;
+}
+
 
 .sr-only {
   position: absolute;
@@ -51,6 +60,11 @@ body {
   color: $dark!important;
 }
 
+.text-danger {
+  color: red!important;
+}
+
 .border-primary {
   border-color: $primary;
 }
+

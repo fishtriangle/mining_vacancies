@@ -1,54 +1,35 @@
-import photo1 from "./photos/1.jpg";
-import photo2 from "./photos/2.jpg";
-import photo3 from "./photos/3.jpg";
+import smallPhoto1 from "./photos/small/1.jpg";
+import smallPhoto2 from "./photos/small/2.jpg";
+import smallPhoto3 from "./photos/small/3.jpg";
+import largePhoto1 from "./photos/large/1.jpg";
+import largePhoto2 from "./photos/large/2.jpg";
+import largePhoto3 from "./photos/large/3.jpg";
 import logo from "./logo.png";
 
 const info = {
   id: 3,
-  title: 'АО "ТСГ АСАЧА"',
-  Article: () => (
-    <article>
-      <p>
-        Бараньевское золоторудное месторождение осваивают АО «Камчатское золото»
-        и АО «Камголд», вошедшие в состав <b>Highland Gold</b> в <b>2021</b>{" "}
-        году. Добыча ведётся с <b>2018</b> года. Руда перерабатывается на
-        Агинской золотоизвлекательной фабрике, расположенной в <b>72</b>{" "}
-        километрах от месторождения. Сейчас проводится реконструкция ЗИФ — её
-        мощность планируется увеличить до <b>200</b> тыс. тонн руды в год.
-      </p>
-      <p>
-        На Бараньевском месторождении и Агинской фабрике построены вахтовые
-        посёлки модульного типа на <b>250</b> и <b>150</b> человек
-        соответственно. Всего в АО «Камчатское золото» и АО «Камголд» работает
-        больше <b>750</b> сотрудников. Вахта длится <b>60</b> дней. В обоих
-        вахтовых посёлках оборудованы спортивные залы и комнаты отдыха, есть
-        доступ в интернет.
-      </p>
-      <p>
-        По вопросам трудоустройства обращаться по телефону:
-        <br />
-        <b>+7 (914) 997-65-40</b> (Екатерина Викторовна Зарезова).
-      </p>
-    </article>
-  ),
+  title: 'АО "КАМЧАТСКОЕ ЗОЛОТО"\n АО "КАМГОЛД"',
   photos: [
     {
-      data: photo1,
+      small: smallPhoto1,
+      large: largePhoto1,
       alt: "Весна на месторождении",
     },
     {
-      data: photo2,
+      small: smallPhoto2,
+      large: largePhoto2,
       alt: "Работа под землей",
     },
     {
-      data: photo3,
+      small: smallPhoto3,
+      large: largePhoto3,
       alt: "Тяжелая техника",
     },
   ],
   logo,
   marker: {
     value: "Бараньевское",
-    position: { top: 738, left: 273 },
+    position: { top: 70, left: 14.5 },
     corner: "right",
   },
 };
