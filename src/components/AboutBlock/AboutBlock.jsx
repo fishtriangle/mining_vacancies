@@ -30,22 +30,11 @@ const AboutBlock = () => {
         setMission('');
       }
     }, 1000);
-
-    if (mission !== text) {
-      setTimeout(() => {
-        setMission(text);
-        setIsHide(false);
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setMission('');
-      }, 1000);
-    }
   };
 
   return (
-    <div className={`fs-5 p-6`}>
-      <div>
+    <div className={`fs-5 pe-6 pt-6`}>
+      <div className={'pe-6 py-1'}>
         <div className={'d-flex flex-row justify-content-between mb-4'}>
           <img
             src={logo}
@@ -72,7 +61,7 @@ const AboutBlock = () => {
           краях, а также Чукотском АО. Кроме того, компания является
           собственником активов в Киргизии.
         </p>
-        <div className={'d-flex justify-content-around mt-5'}>
+        <div className={'d-flex justify-content-around mt-4'}>
           <span
             className={`${styles.AboutBlock_missionBtn} ${
               mission === missions.mission &&
