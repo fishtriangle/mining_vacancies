@@ -1,7 +1,7 @@
-import Marker from "./Marker";
-import { useSelector } from "react-redux";
+import Marker from './Marker';
+import { useSelector } from 'react-redux';
 
-import styles from "./MarkersBlock.module.scss";
+import styles from './MarkersBlock.module.scss';
 
 function MarkersBlock() {
   const enterprisesInfo = useSelector(

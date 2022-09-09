@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentId: null,
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const vacancies = createSlice({
-  name: "vacancies",
+  name: 'vacancies',
   initialState,
   reducers: {
     setCurrentId: (state, action) => {

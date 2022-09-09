@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isHide: false,
-  blockType: "intro",
+  blockType: 'intro',
 };
 
 export const rightBlockSlice = createSlice({
-  name: "rightBlock",
+  name: 'rightBlock',
   initialState,
   reducers: {
     hideRightBlock: (state) => {
@@ -16,10 +16,13 @@ export const rightBlockSlice = createSlice({
       state.isHide = false;
     },
     setIntro: (state) => {
-      state.blockType = "intro";
+      state.blockType = 'intro';
     },
     setEnterprise: (state) => {
-      state.blockType = "enterprise";
+      state.blockType = 'enterprise';
+    },
+    setAbout: (state) => {
+      state.blockType = 'about';
     },
   },
 });
@@ -27,7 +30,12 @@ export const rightBlockSlice = createSlice({
 export const selectRightBlockIsHide = (state) => state.rightBlock.isHide;
 export const selectType = (state) => state.rightBlock.blockType;
 
-export const { hideRightBlock, showRightBlock, setIntro, setEnterprise } =
-  rightBlockSlice.actions;
+export const {
+  hideRightBlock,
+  showRightBlock,
+  setIntro,
+  setEnterprise,
+  setAbout,
+} = rightBlockSlice.actions;
 
 export default rightBlockSlice.reducer;

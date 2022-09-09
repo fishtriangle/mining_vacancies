@@ -1,11 +1,11 @@
-import styles from "./ImageShow.module.scss";
-import { useDispatch, useSelector } from "react-redux";
+import styles from './ImageShow.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   resetImage,
   selectImage,
   showImage,
-} from "../../redux/slices/fullScreenImageSlice";
-import { useEffect } from "react";
+} from '../../redux/slices/fullScreenImageSlice';
+import { useEffect } from 'react';
 
 function ImageShow() {
   const dispatch = useDispatch();

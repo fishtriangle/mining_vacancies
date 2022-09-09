@@ -1,17 +1,13 @@
-import Carousel from "nuka-carousel";
-import { useDispatch, useSelector } from "react-redux";
+import Carousel from 'nuka-carousel';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  hideRightBlock,
-  showRightBlock,
-  setIntro,
-} from "../../redux/slices/rightBlockSlice";
-import { setImage } from "../../redux/slices/fullScreenImageSlice";
-import EnterpriseDescription from "./EnterpriseDescription";
-import styles from "./EnterpriseBlock.module.scss";
-import closeBtnImg from "./img/close.png";
-import { setCurrentId } from "../../redux/slices/vacanciesSlice";
-import { selectCurrentEnterprise } from "../../redux/slices/enterprisesSlice";
+import { setImage } from '../../redux/slices/fullScreenImageSlice';
+import EnterpriseDescription from './EnterpriseDescription';
+import styles from './EnterpriseBlock.module.scss';
+import { setCurrentId } from '../../redux/slices/vacanciesSlice';
+import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
+import YellowBtn from '../YellowBtn/YellowBtn';
+import CloseBtn from '../CloseBtn/CloseBtn';
 
 function EnterpriseBlock() {
   const enterprisesInfo = useSelector(selectCurrentEnterprise);
@@ -20,39 +16,22 @@ function EnterpriseBlock() {
 
   const dispatch = useDispatch();
 
-  function handleClose() {
-    dispatch(hideRightBlock());
-    setTimeout(() => {
-      dispatch(setIntro());
-      dispatch(showRightBlock());
-    }, 1500);
-  }
-
   function handleVacancies(id) {
     dispatch(setCurrentId(id));
   }
 
   return (
     <div className={styles.enterpriseBlock_container}>
-      <div className={"d-flex flex-row justify-content-between mb-4"}>
+      <div className={'d-flex flex-row justify-content-between mb-4'}>
         <img
           src={logo}
-          alt={"logo"}
-          className={`align-self-center my-2 ${styles.enterpriseBlock_highlandLogo}`}
+          alt={'logo'}
+          className={`align-self-center my-2 me-1 ${styles.enterpriseBlock_highlandLogo}`}
         />
-        <h3
-          className={"h5 my-0 mx-2 align-self-center fw-bold text-capitalize"}
-        >
+        <h3 className={'h5 my-0 mx-4 align-self-center fw-bold text-uppercase'}>
           {title}
         </h3>
-        <div>
-          <img
-            src={closeBtnImg}
-            alt={"Close button"}
-            className={`align-self-start ${styles.enterpriseBlock_closeBtn}`}
-            onClick={handleClose}
-          />
-        </div>
+        <CloseBtn />
       </div>
       <div>
         <EnterpriseDescription id={id} />
@@ -76,22 +55,15 @@ function EnterpriseBlock() {
               src={small}
               alt={alt}
               key={index}
-              width={"200px"}
+              width={'200px'}
               onClick={() => dispatch(setImage({ image: large, alt }))}
-              className={"btn border-0 shadow-none"}
+              className={'btn border-0 shadow-none'}
             />
           ))}
         </Carousel>
       </div>
 
-      <div className={"d-flex justify-content-center"}>
-        <b
-          className={`btn text-uppercase text-center fw-bold fs-5 text-black rounded-3 ${styles.enterpriseBlock_vacancyBtn}`}
-          onClick={() => handleVacancies(id)}
-        >
-          Вакансии
-        </b>
-      </div>
+      <YellowBtn onClick={() => handleVacancies(id)} text={'Вакансии'} />
     </div>
   );
 }

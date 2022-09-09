@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
-import { useQuery } from "@apollo/client";
-import { GET_ONE_ENTERPRISE } from "../../graphql/query/enterpriseVacancies";
+import { useSelector } from 'react-redux';
+import { useQuery } from '@apollo/client';
+import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterpriseVacancies';
+import React from 'react';
 
-import Text from "../Text/Text";
-import { selectCurrentId } from "../../redux/slices/vacanciesSlice";
+import Text from '../Text/Text';
+import { selectCurrentId } from '../../redux/slices/vacanciesSlice';
 
 function VacanciesList() {
   const currentId = useSelector(selectCurrentId);
@@ -15,30 +16,31 @@ function VacanciesList() {
     },
   });
 
-  if (loading) return <p className={"text-center"}>Загрузка...</p>;
+  if (loading) return <p className={'text-center'}>Загрузка...</p>;
   if (error)
     return (
       <>
-        <p className={"text-center"}>Ошибка загрузки вакансий...</p>
+        <p className={'text-center'}>Ошибка загрузки вакансий...</p>
         <p>{error.message}</p>
       </>
     );
 
-  const { vacancies } = data["getEnterprise"];
-  console.log(vacancies);
-
+  const { vacancies } = data['getEnterprise'];
   return (
-    <table className={"table fs-3 m-0 text-primary border-primary"}>
-      <tbody className={"overflow-auto"}>
-        {vacancies.map(({ id, vacancy, requirements, docs }) => (
+    <table className={'table fs-4 m-0 text-primary border-primary'}>
+      <tbody className={'overflow-auto'}>
+        {vacancies.map(({ id, vacancy, requirements, docs, salary }) => (
           <tr key={id}>
-            <th scope={"row"}>{id}</th>
+            <td scope={'row'}>{id}</td>
             <td>{vacancy}</td>
             <td>
-              <Text>{requirements}</Text>
+              <Text>{requirements || ''}</Text>
             </td>
             <td>
-              <Text>{docs}</Text>
+              <Text>{docs || ''}</Text>
+            </td>
+            <td>
+              <Text>{salary || ''}</Text>
             </td>
           </tr>
         ))}

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   image: null,
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const fullScreenImage = createSlice({
-  name: "fullScreenImage",
+  name: 'fullScreenImage',
   initialState,
   reducers: {
     setImage: (state, action) => {

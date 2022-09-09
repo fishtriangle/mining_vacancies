@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_ALL_ENTERPRISES = gql`
   query {
@@ -19,6 +19,7 @@ export const GET_ONE_ENTERPRISE = gql`
         vacancy
         requirements
         docs
+        salary
       }
     }
   }

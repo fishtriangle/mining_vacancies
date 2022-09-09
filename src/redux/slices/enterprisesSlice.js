@@ -1,30 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
-import _ from "lodash";
+import { createSlice } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
-import ametist from "../../assets/Ametistovoe/information";
-import asacha from "../../assets/Asachinskoe/information";
-import baranjevskoe from "../../assets/Baranjevskoe/information";
-import ksm from "../../assets/Kamchatstroymateriali/information";
-import kymroch from "../../assets/Kymroch/information";
+import ametist from '../../assets/Ametistovoe/information';
+import asacha from '../../assets/Asachinskoe/information';
+import baranjevskoe from '../../assets/Baranjevskoe/information';
+// import ksm from '../../assets/Kamchatstroymateriali/information';
+// import kymroch from '../../assets/Kymroch/information';
 
 const initialState = {
   enterprises: {
     ametist: { ..._.cloneDeep(ametist), vacancies: null },
     asacha: { ..._.cloneDeep(asacha), vacancies: null },
     baranjevskoe: { ..._.cloneDeep(baranjevskoe), vacancies: null },
-    ksm: { ..._.cloneDeep(ksm), vacancies: null },
-    kymroch: { ..._.cloneDeep(kymroch), vacancies: null },
+    // ksm: { ..._.cloneDeep(ksm), vacancies: null },
+    // kymroch: { ..._.cloneDeep(kymroch), vacancies: null },
   },
   current: null,
 };
 
 export const enterprisesSlice = createSlice({
-  name: "enterprises",
+  name: 'enterprises',
   initialState,
   reducers: {
     updateEnterprise: (state, action) => {
       const [enterprise, description] = action.payload;
-      state["enterprises"][enterprise] = description;
+      state['enterprises'][enterprise] = description;
     },
     setCurrent: (state, action) => {
       state.current = Object.values(state.enterprises).find(

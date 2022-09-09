@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import styles from "./RightSlidingBlock.module.scss";
-import IntroBlock from "../IntroBlock/IntroBlock";
-import EnterpriseBlock from "../EnterpriseBlock/EnterpriseBlock";
+import styles from './RightSlidingBlock.module.scss';
+import IntroBlock from '../IntroBlock/IntroBlock';
+import EnterpriseBlock from '../EnterpriseBlock/EnterpriseBlock';
 import {
   selectRightBlockIsHide,
   selectType,
-} from "../../redux/slices/rightBlockSlice";
+} from '../../redux/slices/rightBlockSlice';
+import AboutBlock from '../AboutBlock/AboutBlock';
 
 function RightSlidingBlock() {
   const isHide = useSelector(selectRightBlockIsHide);
@@ -15,6 +16,7 @@ function RightSlidingBlock() {
   const blockMap = {
     intro: <IntroBlock />,
     enterprise: <EnterpriseBlock />,
+    about: <AboutBlock />,
   };
 
   return (

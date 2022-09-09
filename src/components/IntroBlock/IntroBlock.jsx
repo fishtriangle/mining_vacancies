@@ -1,25 +1,59 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import YellowBtn from '../YellowBtn/YellowBtn';
+import {
+  hideRightBlock,
+  setAbout,
+  showRightBlock,
+} from '../../redux/slices/rightBlockSlice';
 
 function IntroBlock() {
+  const dispatch = useDispatch();
+  function handleClick() {
+    dispatch(hideRightBlock());
+    setTimeout(() => {
+      dispatch(setAbout());
+      dispatch(showRightBlock());
+    }, 1500);
+  }
   return (
-    <div className={`fs-3 d-flex align-items-center p-6`}>
+    <div className={`fs-5 p-6 d-flex align-items-center`}>
       <div>
-        <h2 className={"h1 fw-bold text-center mb-5"}>Горная промышленность</h2>
-        <p className={"fw-bold"}> 5 причин работать у нас:</p>
-        <ul>
-          <li>стабильный высокий доход;</li>
-          <li>команда настоящих профессионалов;</li>
-          <li>карьерный рост;</li>
-          <li>комфортные социально-бытовые условия;</li>
-          <li>бонусы и социальные гарантии.</li>
+        <h2 className={'h3 fw-bold text-start mb-4 fs-1'}>
+          Горная
+          <br />
+          промышленность
+        </h2>
+        <p className={''}>Ты готов участвовать в масштабных проектах?</p>
+        <p className={''}>
+          Тебя драйвят новые амбициозные цели и интересные задачи?
+        </p>
+        <p className={''}>
+          Ты хочешь быть частью команды, нацеленной на успех?
+        </p>
+        <p className={''}>
+          Прямо сейчас у тебя есть возможность построить Компанию будущего
+          вместе с нами. Присоединяйся!
+        </p>
+        <p className={'fw-bold'}>Мы предлагаем:</p>
+        <ul style={{ listStyleType: 'none' }}>
+          <li>- стабильный высокий доход;</li>
+          <li>- работу в команде настоящих профессионалов;</li>
+          <li>- карьерный рост;</li>
+          <li>- комфортные социально-бытовые условия;</li>
+          <li>- бонусы и социальные гарантии.</li>
         </ul>
-        <p className={"fw-bold"}>
-          Выбирай предприятие, жми на кнопку{" "}
-          <Link to={"edit"} className={"text-decoration-none"}>
+        <p className={'fw-bold mb-5'}>
+          Выбирай предприятие, жми на кнопку{' '}
+          <Link to={'edit'} className={'text-decoration-none'}>
             «Вакансии»
-          </Link>{" "}
+          </Link>{' '}
           — и стань частью нашей команды!
         </p>
+        <div className={'d-flex justify-content-center'}>
+          <YellowBtn text={'О предприятии'} onClick={() => handleClick()} />
+        </div>
       </div>
     </div>
   );
