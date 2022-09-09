@@ -33,7 +33,7 @@ const AboutBlock = () => {
   };
 
   return (
-    <div className={`fs-5 pe-6 pt-6`}>
+    <div className={`fs-6 px-6 pt-6`}>
       <div className={'pe-6 py-1'}>
         <div className={'d-flex flex-row justify-content-between mb-4'}>
           <img

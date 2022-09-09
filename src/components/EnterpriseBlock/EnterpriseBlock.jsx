@@ -8,6 +8,7 @@ import { setCurrentId } from '../../redux/slices/vacanciesSlice';
 import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
 import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
+import Text from '../Text/Text';
 
 function EnterpriseBlock() {
   const enterprisesInfo = useSelector(selectCurrentEnterprise);
@@ -29,7 +30,7 @@ function EnterpriseBlock() {
           className={`align-self-center my-2 me-1 ${styles.enterpriseBlock_highlandLogo}`}
         />
         <h3 className={'h5 my-0 mx-4 align-self-center fw-bold text-uppercase'}>
-          {title}
+          <Text>{title}</Text>
         </h3>
         <CloseBtn />
       </div>
