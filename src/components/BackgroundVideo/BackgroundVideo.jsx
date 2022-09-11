@@ -3,12 +3,10 @@ import movie from './Zoloto_BG_2.webm';
 function BackgroundVideo() {
   return (
     <div
-      className={
-        'vw-100 vh-100 d-block position-absolute top-0 overflow-hidden'
-      }
+      className={'w-100 h-100 d-block position-absolute top-0 overflow-hidden'}
     >
       <video
-        className={'vw-100'}
+        className={'w-100'}
         loop='loop'
         autoPlay='autoplay'
         preload='auto'

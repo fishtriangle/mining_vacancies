@@ -1,5 +1,5 @@
 import styles from './AboutBlock.module.scss';
-import logo from './highland_logo.png';
+import logo from './logo.png';
 import CloseBtn from '../CloseBtn/CloseBtn';
 import { useState } from 'react';
 
@@ -33,13 +33,13 @@ const AboutBlock = () => {
   };
 
   return (
-    <div className={`fs-6 px-6 pt-6`}>
+    <div className={`fs-6 px-6 pt-7 d-flex ${styles.AboutBlock}`}>
       <div className={'pe-6 py-1'}>
         <div className={'d-flex flex-row justify-content-between mb-4'}>
           <img
             src={logo}
             alt={'logo'}
-            className={`align-self-center my-2 ${styles.AboutBlock}`}
+            className={`align-self-center my-2 ${styles.AboutBlock_logo}`}
           />
           <h3
             className={'h5 my-0 mx-2 align-self-center fw-bold text-capitalize'}

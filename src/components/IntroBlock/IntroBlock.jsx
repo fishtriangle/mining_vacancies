@@ -18,7 +18,7 @@ function IntroBlock() {
     }, 1500);
   }
   return (
-    <div className={`fs-5 p-6 d-flex align-items-center`}>
+    <div className={`p-6 d-flex align-items-center`}>
       <div>
         <h2 className={'h3 fw-bold text-start mb-4 fs-1'}>
           Горная
