@@ -19,7 +19,7 @@ function IntroBlock() {
   }
   return (
     <div className={`p-6 d-flex align-items-center`}>
-      <div>
+      <div className={'pe-6'}>
         <h2 className={'h3 fw-bold text-start mb-4 fs-1'}>
           Горная
           <br />

@@ -10,7 +10,10 @@
   }
 
   &_highlandLogo {
-    height: 60px;
+    height: 100px;
+    background-color: rgba(255, 229, 157, 0.4);
+    padding: 10px;
+    border-radius: 15px;
   }
 
   &_carouselContainer {
