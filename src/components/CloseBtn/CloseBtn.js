@@ -9,7 +9,7 @@ import {
 } from '../../redux/slices/rightBlockSlice';
 import { setCurrent } from '../../redux/slices/enterprisesSlice';
 
-const CloseBtn = ({ closeAction }) => {
+const CloseBtn = ({ closeAction, classNames }) => {
   const dispatch = useDispatch();
 
   function handleClose() {
@@ -30,7 +30,7 @@ const CloseBtn = ({ closeAction }) => {
       <img
         src={closeBtnImg}
         alt={'Close button'}
-        className={`align-self-start ${styles.closeBtn}`}
+        className={`align-self-start ${styles.closeBtn} ${classNames}`}
         onClick={handleClose}
       />
     </div>

@@ -59,7 +59,7 @@ function Edit() {
         >
           <div className={'row mb-4 align-items-end'}>
             <div className={'col-5 pe-4'}>
-              <label className='form-label'>Выбирете предприятие:</label>
+              <label className='form-label'>Выберите предприятие:</label>
               <select
                 name={'enterprise'}
                 className='form-control'

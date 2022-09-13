@@ -1,7 +1,7 @@
 import Carousel from 'nuka-carousel';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setImage } from '../../redux/slices/fullScreenImageSlice';
+import { setImages } from '../../redux/slices/fullScreenImageSlice';
 import EnterpriseDescription from './EnterpriseDescription';
 import styles from './EnterpriseBlock.module.scss';
 import { setCurrentId } from '../../redux/slices/vacanciesSlice';
@@ -22,8 +22,8 @@ function EnterpriseBlock() {
   }
 
   return (
-    <div className={styles.enterpriseBlock_container}>
-      <div className={'d-flex flex-row justify-content-between mb-4'}>
+    <div className={'py-5 px-5 d-flex align-items-center w-100 flex-column'}>
+      <div className={'d-flex flex-row justify-content-between mb-4 w-100'}>
         <img
           src={logo}
           alt={'logo'}
@@ -34,30 +34,32 @@ function EnterpriseBlock() {
         </h3>
         <CloseBtn />
       </div>
-      <div>
+      <div className={styles.enterpriseBlock_description}>
         <EnterpriseDescription id={id} />
       </div>
 
-      <div className={styles.enterpriseBlock_carouselContainer}>
+      <div className={'w-100 mb-5'}>
         <Carousel
           className={`mt-2 ${styles.enterpriseBlock_carousel}`}
           renderCenterLeftControls={null}
           renderCenterRightControls={null}
           wrapAround={true}
-          slidesToShow={3}
+          slidesToShow={4}
           defaultControlsConfig={{
             pagingDotsClassName: styles.enterpriseBlock_carouselDots,
             pagingDotsContainerClassName:
               styles.enterpriseBlock_carouselDotsContainer,
           }}
         >
-          {photos.map(({ small, large, alt }, index) => (
+          {photos.map(({ small, alt }, index) => (
             <img
               src={small}
               alt={alt}
               key={index}
               width={'200px'}
-              onClick={() => dispatch(setImage({ image: large, alt }))}
+              onClick={() =>
+                dispatch(setImages({ images: photos, currentImage: index }))
+              }
               className={'btn border-0 shadow-none'}
             />
           ))}

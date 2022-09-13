@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  image: null,
-  alt: null,
+  images: null,
+  currentImage: 0,
   isImageShown: false,
 };
 
@@ -10,13 +10,12 @@ export const fullScreenImage = createSlice({
   name: 'fullScreenImage',
   initialState,
   reducers: {
-    setImage: (state, action) => {
-      state.image = action.payload.image;
-      state.alt = action.payload.alt;
+    setImages: (state, action) => {
+      state.images = action.payload.images;
+      state.currentImage = action.payload.currentImage;
     },
     resetImage: (state) => {
-      state.image = null;
-      state.alt = null;
+      state.images = null;
       state.isImageShown = false;
     },
     showImage: (state) => {
@@ -29,6 +28,6 @@ export const selectImage = (state) => state.fullScreenImage;
 export const selectAlt = (state) => state.fullScreenImage.alt;
 export const selectImageIsShown = (state) => state.fullScreenImage.isImageShown;
 
-export const { setImage, resetImage, showImage } = fullScreenImage.actions;
+export const { setImages, resetImage, showImage } = fullScreenImage.actions;
 
 export default fullScreenImage.reducer;

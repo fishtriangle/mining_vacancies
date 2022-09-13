@@ -7,6 +7,8 @@ import {
   setAbout,
   showRightBlock,
 } from '../../redux/slices/rightBlockSlice';
+import logo from './logo.png';
+import styles from './IntroBlock.module.scss';
 
 function IntroBlock() {
   const dispatch = useDispatch();
@@ -18,13 +20,13 @@ function IntroBlock() {
     }, 1500);
   }
   return (
-    <div className={`p-6 d-flex align-items-center`}>
-      <div className={'pe-6'}>
-        <h2 className={'h3 fw-bold text-start mb-4 fs-1'}>
-          Горная
-          <br />
-          промышленность
-        </h2>
+    <div className={`py-6 px-5 d-flex align-items-center`}>
+      <div className={`p-2 rounded-2 ${styles.IntroBlock}`}>
+        <img
+          src={logo}
+          alt={'logo'}
+          className={`align-self-center mb-2 ${styles.IntroBlock_logo}`}
+        />
         <p className={''}>Ты готов участвовать в масштабных проектах?</p>
         <p className={''}>
           Тебя драйвят новые амбициозные цели и интересные задачи?
@@ -44,7 +46,7 @@ function IntroBlock() {
           <li>- комфортные социально-бытовые условия;</li>
           <li>- бонусы и социальные гарантии.</li>
         </ul>
-        <p className={'fw-bold mb-5'}>
+        <p className={'fw-bold mb-3'}>
           Выбирай предприятие, жми на кнопку{' '}
           <Link to={'edit'} className={'text-decoration-none'}>
             «Вакансии»
@@ -52,7 +54,7 @@ function IntroBlock() {
           — и стань частью нашей команды!
         </p>
         <div className={'d-flex justify-content-center'}>
-          <YellowBtn text={'О предприятии'} onClick={() => handleClick()} />
+          <YellowBtn text={'О компании'} onClick={() => handleClick()} />
         </div>
       </div>
     </div>

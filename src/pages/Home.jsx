@@ -8,13 +8,13 @@ import { selectImage } from '../redux/slices/fullScreenImageSlice';
 import { selectCurrentId } from '../redux/slices/vacanciesSlice';
 
 function Home() {
-  const { image } = useSelector(selectImage);
+  const { images } = useSelector(selectImage);
   const currentId = useSelector(selectCurrentId);
   return (
     <>
       <MarkersBlock />
       <RightSlidingBlock />
-      {image && <ImageShow />}
+      {images && <ImageShow />}
       {currentId && <VacanciesBlock />}
     </>
   );
