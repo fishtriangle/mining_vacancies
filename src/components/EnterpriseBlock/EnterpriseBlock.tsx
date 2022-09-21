@@ -1,5 +1,6 @@
 import Carousel from 'nuka-carousel';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 import { setImages } from '../../redux/slices/fullScreenImageSlice';
 import EnterpriseDescription from './EnterpriseDescription';
@@ -10,14 +11,14 @@ import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
 import Text from '../Text/Text';
 
-function EnterpriseBlock() {
+const EnterpriseBlock: React.FC = () => {
   const enterprisesInfo = useSelector(selectCurrentEnterprise);
 
   const { photos, title, logo, id } = enterprisesInfo;
 
   const dispatch = useDispatch();
 
-  function handleVacancies(id) {
+  function handleVacancies(id: number) {
     dispatch(setCurrentId(id));
   }
 
@@ -32,7 +33,7 @@ function EnterpriseBlock() {
         <h3 className={'h5 my-0 mx-4 align-self-center fw-bold text-uppercase'}>
           <Text>{title}</Text>
         </h3>
-        <CloseBtn />
+        <CloseBtn closeAction={undefined} classNames={undefined} />
       </div>
       <div className={styles.enterpriseBlock_description}>
         <EnterpriseDescription id={id} />
@@ -51,24 +52,26 @@ function EnterpriseBlock() {
               styles.enterpriseBlock_carouselDotsContainer,
           }}
         >
-          {photos.map(({ small, alt }, index) => (
-            <img
-              src={small}
-              alt={alt}
-              key={index}
-              width={'200px'}
-              onClick={() =>
-                dispatch(setImages({ images: photos, currentImage: index }))
-              }
-              className={'btn border-0 shadow-none'}
-            />
-          ))}
+          {photos.map(
+            ({ small, alt }: { small: string; alt: string }, index: number) => (
+              <img
+                src={small}
+                alt={alt}
+                key={index}
+                width={'200px'}
+                onClick={() =>
+                  dispatch(setImages({ images: photos, currentImage: index }))
+                }
+                className={'btn border-0 shadow-none'}
+              />
+            )
+          )}
         </Carousel>
       </div>
 
       <YellowBtn onClick={() => handleVacancies(id)} text={'Вакансии'} />
     </div>
   );
-}
+};
 
 export default EnterpriseBlock;

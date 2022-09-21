@@ -14,15 +14,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-    </ApolloProvider>
-  </React.StrictMode>
-);
+const rootElem = document.getElementById('root');
+if (rootElem) {
+  const root = ReactDOM.createRoot(rootElem);
+  root.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </ApolloProvider>
+    </React.StrictMode>
+  );
+}

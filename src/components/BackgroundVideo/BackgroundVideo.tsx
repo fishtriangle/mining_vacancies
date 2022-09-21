@@ -7,8 +7,8 @@ function BackgroundVideo() {
     >
       <video
         className={'w-100'}
-        loop='loop'
-        autoPlay='autoplay'
+        loop={true}
+        autoPlay={true}
         preload='auto'
         muted
       >

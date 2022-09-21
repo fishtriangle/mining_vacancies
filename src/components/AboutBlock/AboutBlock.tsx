@@ -1,7 +1,7 @@
 import styles from './AboutBlock.module.scss';
 import logo from './logo.png';
 import CloseBtn from '../CloseBtn/CloseBtn';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const missions = {
   mission: 'Золото – вечная ценность Земли. Мы имеем честь нести её людям.',
@@ -9,11 +9,11 @@ const missions = {
     'Объединяя успешных, мы бережно и ответственно добываем богатства недр, развиваем регионы, повышаем благосостояние семей и доходность для акционеров.',
 };
 
-const AboutBlock = () => {
-  const [isHide, setIsHide] = useState(true);
-  const [mission, setMission] = useState('');
+const AboutBlock: React.FC = () => {
+  const [isHide, setIsHide] = useState<boolean>(true);
+  const [mission, setMission] = useState<string>('');
 
-  const handleMissionClick = (text) => {
+  const handleMissionClick = (text: string) => {
     if (isHide) {
       setIsHide(false);
       setMission(text);
@@ -44,7 +44,7 @@ const AboutBlock = () => {
           <h3
             className={'h5 my-0 mx-2 align-self-center fw-bold text-capitalize'}
           ></h3>
-          <CloseBtn />
+          <CloseBtn closeAction={undefined} classNames={undefined} />
         </div>
         <p className={''}>
           Highland Gold Mining – производитель золота с прочной репутацией,

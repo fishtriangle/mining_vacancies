@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from './ImageShow.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,7 +11,7 @@ import { useEffect } from 'react';
 import Carousel from 'nuka-carousel';
 import CloseBtn from '../CloseBtn/CloseBtn';
 
-function ImageShow() {
+const ImageShow: React.FC = () => {
   const dispatch = useDispatch();
 
   const { images, isImageShown } = useSelector(selectImage);
@@ -55,15 +57,17 @@ function ImageShow() {
           wrapAround={true}
           slidesToShow={1}
         >
-          {images.map(({ large, alt }, index) => (
-            <img
-              src={large}
-              alt={alt}
-              key={index}
-              width={'1600px'}
-              className={'btn border-0 shadow-none'}
-            />
-          ))}
+          {images.map(
+            ({ large, alt }: { large: string; alt: string }, index: number) => (
+              <img
+                src={large}
+                alt={alt}
+                key={index}
+                width={'1600px'}
+                className={'btn border-0 shadow-none'}
+              />
+            )
+          )}
         </Carousel>
       </div>
       <CloseBtn
@@ -72,6 +76,6 @@ function ImageShow() {
       />
     </div>
   );
-}
+};
 
 export default ImageShow;

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
 import music from './Zoloto_music.mp3';
 import styles from './BackgroundMusic.module.scss';
 
-function BackgroundMusic() {
-  const [isPlaying, setIsPlaying] = useState(false);
+const BackgroundMusic: React.FC = () => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [play, { pause }] = useSound(music, {
     volume: 1,
     loop: true,
@@ -27,7 +27,6 @@ function BackgroundMusic() {
         x='0px'
         y='0px'
         viewBox='0 0 58 58'
-        style={{ enableBackground: 'new 0 0 58 58' }}
         className={
           isPlaying
             ? styles.BackgroundMusic_icon__active
@@ -70,6 +69,6 @@ function BackgroundMusic() {
       </svg>
     </div>
   );
-}
+};
 
 export default BackgroundMusic;

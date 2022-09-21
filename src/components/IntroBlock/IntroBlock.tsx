@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +11,7 @@ import {
 import logo from './logo.png';
 import styles from './IntroBlock.module.scss';
 
-function IntroBlock() {
+const IntroBlock: React.FC = () => {
   const dispatch = useDispatch();
   function handleClick() {
     dispatch(hideRightBlock());
@@ -59,6 +60,6 @@ function IntroBlock() {
       </div>
     </div>
   );
-}
+};
 
 export default IntroBlock;
