@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { UPDATE_ENTERPRISE } from '../graphql/mutations/enterpriseVacancies';
@@ -7,37 +7,48 @@ import validateForm from '../utilities/validate';
 import { Link } from 'react-router-dom';
 import handleVacanciesFile from '../utilities/handleVacanciesFile';
 
-function Edit() {
+const Edit: React.FC = () => {
   const enterprisesInfo = useSelector(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // TODO state type should be written
     (state) => state.enterprisesInfo.enterprises
   );
 
-  const fileItem = useRef();
+  const fileItem = useRef<HTMLInputElement>(null);
 
-  const [enterpriseId, setEnterpriseId] = useState(null);
-  const [enterpriseErrors, setEnterpriseErrors] = useState(null);
-  const [fileErrors, setFileErrors] = useState(null);
+  const [enterpriseId, setEnterpriseId] = useState<number | null>(null);
+  const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
+  const [fileErrors, setFileErrors] = useState<string | null>(null);
 
   const errorsMap = {
     enterprise: setEnterpriseErrors,
     fileItem: setFileErrors,
   };
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // TODO event type should be written
   const handleSelectChange = (event) => {
     setEnterpriseId(event.target.value);
   };
 
   const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // TODO event type should be written
   const onSubmit = (event) => {
     event.preventDefault();
     Object.values(errorsMap).forEach((setError) => setError(null));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // TODO fileItem.current type should be written
     const file = fileItem.current?.files[0];
 
     const errors = validateForm(enterpriseId, file);
     if (errors.length > 0) {
       errors.forEach(({ input, message }) => {
-        errorsMap[input](message);
+        errorsMap[input as keyof typeof errorsMap](message);
       });
       return;
     }
@@ -65,12 +76,17 @@ function Edit() {
                 className='form-control'
                 onChange={handleSelectChange}
               >
-                <option value={null} className={'small'} />
-                {Object.values(enterprisesInfo).map(({ id, title }) => (
-                  <option value={id} key={id} className={'small'}>
-                    {title}
-                  </option>
-                ))}
+                <option value={''} className={'small'} />
+                {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  // TODO enterprisesInfo type should be written
+                  Object.values(enterprisesInfo).map(({ id, title }) => (
+                    <option value={id} key={id} className={'small'}>
+                      {title}
+                    </option>
+                  ))
+                }
               </select>
               <span
                 className={`fw-bold small text-danger ${
@@ -107,6 +123,6 @@ function Edit() {
       </div>
     </div>
   );
-}
+};
 
 export default Edit;

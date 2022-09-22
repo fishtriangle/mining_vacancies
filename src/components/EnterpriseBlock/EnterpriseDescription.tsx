@@ -1,5 +1,7 @@
-function EnterpriseDescription(props) {
-  switch (props.id) {
+import React from 'react';
+
+const EnterpriseDescription: React.FC<{ id: number }> = ({ id }) => {
+  switch (id) {
     case 1:
       return (
         <article>
@@ -134,8 +136,8 @@ function EnterpriseDescription(props) {
     //     </article>
     //   );
     default:
-      return null;
+      return <></>;
   }
-}
+};
 
 export default EnterpriseDescription;

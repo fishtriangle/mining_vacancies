@@ -33,7 +33,7 @@ const EnterpriseBlock: React.FC = () => {
         <h3 className={'h5 my-0 mx-4 align-self-center fw-bold text-uppercase'}>
           <Text>{title}</Text>
         </h3>
-        <CloseBtn closeAction={undefined} classNames={undefined} />
+        <CloseBtn closeAction={undefined} classNames={''} />
       </div>
       <div className={styles.enterpriseBlock_description}>
         <EnterpriseDescription id={id} />

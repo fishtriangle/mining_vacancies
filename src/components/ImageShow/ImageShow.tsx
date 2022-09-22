@@ -11,11 +11,22 @@ import { useEffect } from 'react';
 import Carousel from 'nuka-carousel';
 import CloseBtn from '../CloseBtn/CloseBtn';
 
+type ImageItem = {
+  small: string;
+  large: string;
+  alt: string;
+};
+
+type SelectImageItem = {
+  images: null | ImageItem[];
+  currentImage?: number;
+  isImageShown: boolean;
+};
+
 const ImageShow: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { images, isImageShown } = useSelector(selectImage);
-  console.log(images);
+  const { images, isImageShown }: SelectImageItem = useSelector(selectImage);
 
   useEffect(() => {
     setTimeout(() => dispatch(showImage()), 0);
@@ -57,17 +68,21 @@ const ImageShow: React.FC = () => {
           wrapAround={true}
           slidesToShow={1}
         >
-          {images.map(
-            ({ large, alt }: { large: string; alt: string }, index: number) => (
-              <img
-                src={large}
-                alt={alt}
-                key={index}
-                width={'1600px'}
-                className={'btn border-0 shadow-none'}
-              />
-            )
-          )}
+          {images &&
+            images.map(
+              (
+                { large, alt }: { large: string; alt: string },
+                index: number
+              ) => (
+                <img
+                  src={large}
+                  alt={alt}
+                  key={index}
+                  width={'1600px'}
+                  className={'btn border-0 shadow-none'}
+                />
+              )
+            )}
         </Carousel>
       </div>
       <CloseBtn

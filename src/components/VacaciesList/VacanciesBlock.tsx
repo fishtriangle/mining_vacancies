@@ -18,7 +18,7 @@ const btnLabel = {
   contacts: 'контакты',
 };
 
-function VacanciesBlock() {
+const VacanciesBlock: React.FC = () => {
   const dispatch = useDispatch();
 
   const isVacanciesShown = useSelector(selectIsVacanciesShown);
@@ -69,7 +69,10 @@ function VacanciesBlock() {
             Вакантные должности
             <br /> {title}
           </h3>
-          <CloseBtn closeAction={() => dispatch(resetVacancies())} />
+          <CloseBtn
+            closeAction={() => dispatch(resetVacancies())}
+            classNames={''}
+          />
         </div>
 
         {dataBlockType === 'контакты' && (
@@ -77,7 +80,7 @@ function VacanciesBlock() {
             <div className={'fs-4 text-center my-6'}>
               <p>По вопросам трудоустройства обращаться по телефону: </p>
               <ul className={'list-unstyled'}>
-                {contacts.map((contact, index) => (
+                {contacts.map((contact: string, index: number) => (
                   <li key={index} className={'fw-bold'}>
                     {contact}
                   </li>
@@ -113,6 +116,6 @@ function VacanciesBlock() {
       </div>
     </div>
   );
-}
+};
 
 export default VacanciesBlock;

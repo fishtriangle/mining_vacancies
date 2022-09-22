@@ -44,7 +44,7 @@ const AboutBlock: React.FC = () => {
           <h3
             className={'h5 my-0 mx-2 align-self-center fw-bold text-capitalize'}
           ></h3>
-          <CloseBtn closeAction={undefined} classNames={undefined} />
+          <CloseBtn closeAction={undefined} classNames={''} />
         </div>
         <p className={''}>
           Highland Gold Mining – производитель золота с прочной репутацией,

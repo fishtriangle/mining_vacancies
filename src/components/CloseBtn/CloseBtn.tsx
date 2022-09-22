@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import React from 'react';
 
 import closeBtnImg from '../EnterpriseBlock/img/close.png';
 import styles from './CloseBtn.module.scss';
@@ -9,7 +10,12 @@ import {
 } from '../../redux/slices/rightBlockSlice';
 import { setCurrent } from '../../redux/slices/enterprisesSlice';
 
-const CloseBtn = ({ closeAction, classNames }) => {
+type CloseBtnProps = {
+  closeAction: any;
+  classNames: string;
+};
+
+const CloseBtn: React.FC<CloseBtnProps> = ({ closeAction, classNames }) => {
   const dispatch = useDispatch();
 
   function handleClose() {

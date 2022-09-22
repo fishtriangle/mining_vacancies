@@ -6,7 +6,15 @@ import React from 'react';
 import Text from '../Text/Text';
 import { selectCurrentId } from '../../redux/slices/vacanciesSlice';
 
-function VacanciesList() {
+type Vacancy = {
+  id: number;
+  vacancy: string;
+  requirements: string;
+  docs: string;
+  salary: string;
+};
+
+const VacanciesList: React.FC = () => {
   const currentId = useSelector(selectCurrentId);
 
   const { data, loading, error } = useQuery(GET_ONE_ENTERPRISE, {
@@ -29,24 +37,26 @@ function VacanciesList() {
   return (
     <table className={'table fs-4 m-0 text-primary border-primary'}>
       <tbody className={'overflow-auto'}>
-        {vacancies.map(({ id, vacancy, requirements, docs, salary }) => (
-          <tr key={id}>
-            <td scope={'row'}>{id}</td>
-            <td>{vacancy}</td>
-            <td>
-              <Text>{requirements || ''}</Text>
-            </td>
-            <td>
-              <Text>{docs || ''}</Text>
-            </td>
-            <td>
-              <Text>{salary || ''}</Text>
-            </td>
-          </tr>
-        ))}
+        {vacancies.map(
+          ({ id, vacancy, requirements, docs, salary }: Vacancy) => (
+            <tr key={id}>
+              <td scope={'row'}>{id}</td>
+              <td>{vacancy}</td>
+              <td>
+                <Text>{requirements || ''}</Text>
+              </td>
+              <td>
+                <Text>{docs || ''}</Text>
+              </td>
+              <td>
+                <Text>{salary || ''}</Text>
+              </td>
+            </tr>
+          )
+        )}
       </tbody>
     </table>
   );
-}
+};
 
 export default VacanciesList;

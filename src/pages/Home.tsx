@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 import MarkersBlock from '../components/MarkersBlock/MarkersBlock';
 import RightSlidingBlock from '../components/RightSlidingBlock/RightSlidingBlock';
@@ -7,7 +8,7 @@ import VacanciesBlock from '../components/VacaciesList/VacanciesBlock';
 import { selectImage } from '../redux/slices/fullScreenImageSlice';
 import { selectCurrentId } from '../redux/slices/vacanciesSlice';
 
-function Home() {
+const Home: React.FC = () => {
   const { images } = useSelector(selectImage);
   const currentId = useSelector(selectCurrentId);
   return (
@@ -18,5 +19,5 @@ function Home() {
       {currentId && <VacanciesBlock />}
     </>
   );
-}
+};
 export default Home;

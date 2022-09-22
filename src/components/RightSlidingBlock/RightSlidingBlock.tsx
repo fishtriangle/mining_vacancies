@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './RightSlidingBlock.module.scss';
@@ -9,9 +10,9 @@ import {
 } from '../../redux/slices/rightBlockSlice';
 import AboutBlock from '../AboutBlock/AboutBlock';
 
-function RightSlidingBlock() {
+const RightSlidingBlock: React.FC = () => {
   const isHide = useSelector(selectRightBlockIsHide);
-  const blockType = useSelector(selectType);
+  const blockType: 'intro' | 'enterprise' | 'about' = useSelector(selectType);
 
   const blockMap = {
     intro: <IntroBlock />,
@@ -28,6 +29,6 @@ function RightSlidingBlock() {
       {blockMap[blockType]}
     </div>
   );
-}
+};
 
 export default RightSlidingBlock;

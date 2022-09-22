@@ -1,9 +1,10 @@
 import movie from './Zoloto_BG_2.webm';
+import React from 'react';
 
-function BackgroundVideo() {
+const BackgroundVideo: React.FC = () => {
   return (
     <div
-      className={'w-100 h-100 d-block position-absolute top-0 overflow-hidden'}
+      className={'w-h-inherit d-block position-absolute top-0 overflow-hidden'}
     >
       <video
         className={'w-100'}
@@ -20,6 +21,6 @@ function BackgroundVideo() {
       </video>
     </div>
   );
-}
+};
 
 export default BackgroundVideo;

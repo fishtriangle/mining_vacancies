@@ -67,6 +67,7 @@ body {
 .App {
   height: inherit;
   width: inherit;
+  position: relative;
 }
 
 .sr-only {
@@ -103,4 +104,9 @@ body {
 
 .fs-0 {
   font-size: 4.5rem!important;
+}
+
+.w-h-inherit {
+  width: inherit;
+  height: inherit;
 }

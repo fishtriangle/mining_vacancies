@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Marker.module.scss';
@@ -15,13 +15,25 @@ import {
   setCurrent,
 } from '../../redux/slices/enterprisesSlice';
 
-function Marker({ value, position, corner, id }) {
+type Position = {
+  top: number;
+  left: number;
+};
+
+type MarkerProps = {
+  value: string;
+  position: Position;
+  corner: 'left' | 'right';
+  id: number;
+};
+
+const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
   const [width, setWidth] = useState(0);
-  const markerLabel = useRef();
+  const markerLabel = useRef<HTMLParagraphElement>(null);
   const dispatch = useDispatch();
   const isClosed = useSelector(selectRightBlockIsHide);
 
-  function handleClick(id) {
+  function handleClick(id: number) {
     dispatch(hideRightBlock());
     setTimeout(() => {
       dispatch(setEnterprise());
@@ -41,7 +53,7 @@ function Marker({ value, position, corner, id }) {
 
   const labelParams = {
     left: {
-      containerStyle: (position) => ({
+      containerStyle: (position: Position) => ({
         top: `calc(${position.top}% - 16px)`,
         left: `${position.left}%`,
       }),
@@ -52,7 +64,7 @@ function Marker({ value, position, corner, id }) {
       imgClassName: styles.markersBlock_leftCorner,
     },
     right: {
-      containerStyle: (position) => ({
+      containerStyle: (position: Position) => ({
         top: `calc(${position.top}% - 16px)`,
         left: `calc(${position.left}% - ${width}px)`,
       }),
@@ -86,6 +98,6 @@ function Marker({ value, position, corner, id }) {
       />
     </div>
   );
-}
+};
 
 export default Marker;
