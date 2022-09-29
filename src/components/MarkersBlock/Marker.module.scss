@@ -1,5 +1,6 @@
 .markersBlock {
   &_label {
+    font-size: 1.25rem;
     margin: 0;
     padding: 6px 17px;
     line-height: 1em;
@@ -16,15 +17,30 @@
     }
   }
 
-  &_leftCorner {
+  &_topLeftCorner {
     position: relative;
-    top: -7px;
-    left: 0;
+    top: 5px;
+    left: -20px;
+    transform: rotateY(180deg);
   }
 
-  &_rightCorner {
+  &_topRightCorner {
     position: relative;
-    top: -7px;
-    right: calc(-100% + 16px);
+    top: 5px;
+    right: calc(-100% + 153px);
+  }
+
+  &_bottomLeftCorner {
+    position: relative;
+    top: -92px;
+    left: -20px;
+    transform: rotateY(180deg) rotateX(180deg);
+  }
+
+  &_bottomRightCorner {
+    position: relative;
+    top: -92px;
+    right: calc(-100% + 153px);
+    transform: rotateX(180deg);
   }
 }

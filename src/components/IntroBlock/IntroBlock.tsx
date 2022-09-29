@@ -13,7 +13,7 @@ import styles from './IntroBlock.module.scss';
 
 const IntroBlock: React.FC = () => {
   const dispatch = useDispatch();
-  function handleClick() {
+  function handleClick(): void {
     dispatch(hideRightBlock());
     setTimeout(() => {
       dispatch(setAbout());
@@ -21,14 +21,18 @@ const IntroBlock: React.FC = () => {
     }, 1500);
   }
   return (
-    <div className={`py-6 px-5 d-flex align-items-center`}>
-      <div className={`p-2 rounded-2 ${styles.IntroBlock}`}>
+    <div
+      className={`d-flex justify-content-center flex-column me-5 text-white`}
+    >
+      <div className={`mb-4 block-bg`}>
         <img
           src={logo}
           alt={'logo'}
-          className={`align-self-center mb-2 ${styles.IntroBlock_logo}`}
+          className={`align-self-center mb-3 ${styles.IntroBlock_logo}`}
         />
-        <p className={''}>Ты готов участвовать в масштабных проектах?</p>
+        <p className={'fw-bold text-primary text-uppercase'}>
+          Ты готов участвовать в масштабных проектах?
+        </p>
         <p className={''}>
           Тебя драйвят новые амбициозные цели и интересные задачи?
         </p>
@@ -39,24 +43,24 @@ const IntroBlock: React.FC = () => {
           Прямо сейчас у тебя есть возможность построить Компанию будущего
           вместе с нами. Присоединяйся!
         </p>
-        <p className={'fw-bold'}>Мы предлагаем:</p>
-        <ul style={{ listStyleType: 'none' }}>
-          <li>- стабильный высокий доход;</li>
-          <li>- работу в команде настоящих профессионалов;</li>
-          <li>- карьерный рост;</li>
-          <li>- комфортные социально-бытовые условия;</li>
-          <li>- бонусы и социальные гарантии.</li>
+        <p className={'m-0'}>Мы предлагаем:</p>
+        <ul style={{ listStyleType: 'none' }} className={'p-0'}>
+          <li>— стабильный высокий доход</li>
+          <li>— работу в команде настоящих профессионалов</li>
+          <li>— карьерный рост</li>
+          <li>— комфортные социально-бытовые условия</li>
+          <li>— бонусы и социальные гарантии</li>
         </ul>
-        <p className={'fw-bold mb-3'}>
+        <p className={'m-0 text-uppercase'}>
           Выбирай предприятие, жми на кнопку{' '}
-          <Link to={'edit'} className={'text-decoration-none'}>
+          <Link to={'edit'} className={'text-decoration-none text-white'}>
             «Вакансии»
           </Link>{' '}
-          — и стань частью нашей команды!
+          и стань частью нашей команды!
         </p>
-        <div className={'d-flex justify-content-center'}>
-          <YellowBtn text={'О компании'} onClick={() => handleClick()} />
-        </div>
+      </div>
+      <div className={'d-flex justify-content-center'}>
+        <YellowBtn text={'О компании'} onClick={() => handleClick()} />
       </div>
     </div>
   );

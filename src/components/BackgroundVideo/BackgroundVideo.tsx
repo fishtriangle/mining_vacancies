@@ -1,4 +1,4 @@
-import movie from './Zoloto_BG_2.webm';
+import movie from './Zoloto_BG_3.webm';
 import React from 'react';
 
 const BackgroundVideo: React.FC = () => {

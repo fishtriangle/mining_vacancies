@@ -17,7 +17,7 @@ const Edit: React.FC = () => {
 
   const fileItem = useRef<HTMLInputElement>(null);
 
-  const [enterpriseId, setEnterpriseId] = useState<number | null>(null);
+  const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
   const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
   const [fileErrors, setFileErrors] = useState<string | null>(null);
 
@@ -25,25 +25,18 @@ const Edit: React.FC = () => {
     enterprise: setEnterpriseErrors,
     fileItem: setFileErrors,
   };
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // TODO event type should be written
-  const handleSelectChange = (event) => {
-    setEnterpriseId(event.target.value);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const id: string = event.target.value;
+    setEnterpriseId(id);
   };
 
   const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // TODO event type should be written
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     Object.values(errorsMap).forEach((setError) => setError(null));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO fileItem.current type should be written
-    const file = fileItem.current?.files[0];
+
+    const file = fileItem.current?.files?.[0];
 
     const errors = validateForm(enterpriseId, file);
     if (errors.length > 0) {

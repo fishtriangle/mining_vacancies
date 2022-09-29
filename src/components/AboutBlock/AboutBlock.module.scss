@@ -1,28 +1,5 @@
 .AboutBlock {
-
   &_logo {
     height: 120px;
-    background-color: rgba(255, 229, 157, 0.4);
-    padding: 10px;
-    border-radius: 15px;
-  }
-
-  &_missionBtn {
-    font-size: 1.5rem;
-    padding: 0.5rem 2rem;
-    font-weight: bold;
-    border: 1px solid #ffe59d;
-    border-radius: 0.4rem;
-
-    &__checked {
-      background-color: rgba(255, 229, 157, 0.3);
-    }
-  }
-
-  &_alert {
-    transition: 600ms;
-    &__hide {
-      opacity: 0;
-    }
   }
 }

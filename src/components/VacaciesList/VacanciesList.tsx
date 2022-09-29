@@ -36,6 +36,16 @@ const VacanciesList: React.FC = () => {
   const { vacancies } = data['getEnterprise'];
   return (
     <table className={'table fs-4 m-0 text-primary border-primary'}>
+      <thead>
+        <tr>
+          <th scope={'col'}>#</th>
+          <th scope={'col'}>Вакансия</th>
+          <th scope={'col'}>Требования к кандидату</th>
+          <th scope={'col'}>Необходимые документы</th>
+          <th scope={'col'}>Заработная плата</th>
+        </tr>
+      </thead>
+
       <tbody className={'overflow-auto'}>
         {vacancies.map(
           ({ id, vacancy, requirements, docs, salary }: Vacancy) => (

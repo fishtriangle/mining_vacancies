@@ -12,6 +12,7 @@ import VacanciesList from './VacanciesList';
 import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
 import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
+import Text from '../Text/Text';
 
 const btnLabel = {
   vacancies: 'вакансии',
@@ -24,7 +25,7 @@ const VacanciesBlock: React.FC = () => {
   const isVacanciesShown = useSelector(selectIsVacanciesShown);
   const { title, contacts } = useSelector(selectCurrentEnterprise);
 
-  const [dataBlockType, setDataBlockType] = useState('вакансии');
+  const [dataBlockType, setDataBlockType] = useState<string>('вакансии');
 
   useEffect(() => {
     setTimeout(() => dispatch(showVacancies()), 0);
@@ -50,24 +51,26 @@ const VacanciesBlock: React.FC = () => {
           isVacanciesShown && styles.VacanciesList_content__show
         }`}
       >
-        <div className={'d-flex justify-content-between'}>
-          <div className={styles.VacanciesList_btnContainer}>
-            <YellowBtn
-              text={
-                dataBlockType === btnLabel.vacancies
-                  ? btnLabel.contacts
-                  : btnLabel.vacancies
-              }
-              onClick={() => handleContactsClick()}
-            />
-          </div>
+        <div className={styles.VacanciesList_btnContainer}>
+          <YellowBtn
+            text={
+              dataBlockType === btnLabel.vacancies
+                ? btnLabel.contacts
+                : btnLabel.vacancies
+            }
+            style={{ minWidth: '320px' }}
+            onClick={() => handleContactsClick()}
+          />
+        </div>
+        <div className={'d-flex justify-content-center'}>
           <h3
             className={
-              'h1 text-uppercase align-self-center mb-5 fw-bold text-center'
+              'h1 text-uppercase align-self-center mb-5 fw-bold text-center flex-grow-1'
             }
           >
             Вакантные должности
-            <br /> {title}
+            <br />
+            <Text>{title}</Text>
           </h3>
           <CloseBtn
             closeAction={() => dispatch(resetVacancies())}
@@ -77,8 +80,13 @@ const VacanciesBlock: React.FC = () => {
 
         {dataBlockType === 'контакты' && (
           <>
-            <div className={'fs-4 text-center my-6'}>
-              <p>По вопросам трудоустройства обращаться по телефону: </p>
+            <div className={'fs-4 my-6 m-auto w-70'}>
+              {contacts.length === 1 ? (
+                <p>По вопросам трудоустройства обращаться по телефону: </p>
+              ) : (
+                <p>По вопросам трудоустройства обращаться по телефонам: </p>
+              )}
+
               <ul className={'list-unstyled'}>
                 {contacts.map((contact: string, index: number) => (
                   <li key={index} className={'fw-bold'}>
@@ -91,27 +99,9 @@ const VacanciesBlock: React.FC = () => {
         )}
 
         {dataBlockType === 'вакансии' && (
-          <>
-            <div
-              className={`overflow-hidden ${styles.VacanciesList_tableHead}`}
-            >
-              <table className={'table fs-4 text-primary border-0'}>
-                <thead>
-                  <tr>
-                    <th scope={'col'}>#</th>
-                    <th scope={'col'}>Вакансия</th>
-                    <th scope={'col'}>Требования к кандидату</th>
-                    <th scope={'col'}>Необходимые документы</th>
-                    <th scope={'col'}>Заработная плата</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
-            <div className={styles.VacanciesList_tableBody}>
-              <VacanciesList />
-            </div>
-          </>
+          <div className={styles.VacanciesList_table}>
+            <VacanciesList />
+          </div>
         )}
       </div>
     </div>

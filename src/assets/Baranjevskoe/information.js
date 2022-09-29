@@ -33,7 +33,7 @@ import logo from './logo.png';
 
 const info = {
   id: 3,
-  title: 'АО "КАМЧАТСКОЕ ЗОЛОТО"\n АО "КАМГОЛД"',
+  title: 'АО «КАМЧАТСКОЕ ЗОЛОТО»\n АО «КАМГОЛД»',
   photos: [
     {
       small: smallPhoto1,
@@ -114,8 +114,8 @@ const info = {
   logo,
   marker: {
     value: 'Бараньевское',
-    position: { top: 70, left: 14.5 },
-    corner: 'right',
+    position: { top: 67, left: 16 },
+    corner: 'top-left',
   },
   contacts: ['+7 (914) 997-65-40 (Екатерина Викторовна Зарезова)'],
 };

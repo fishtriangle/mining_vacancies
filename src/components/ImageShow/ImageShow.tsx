@@ -34,7 +34,7 @@ const ImageShow: React.FC = () => {
 
   return (
     <div
-      className={`vw-100 vh-100 position-absolute top-0 overflow-hidden d-flex justify-content-center align-items-center`}
+      className={`w-100 h-100 position-absolute top-0 overflow-hidden d-flex justify-content-center align-items-center`}
     >
       <div
         className={`w-100 h-100 position-absolute top-0 overflow-hidden bg-black opacity-75 ${styles.ImageShow_bg}`}

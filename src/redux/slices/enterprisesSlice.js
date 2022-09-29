@@ -4,6 +4,7 @@ import _ from 'lodash';
 import ametist from '../../assets/Ametistovoe/information';
 import asacha from '../../assets/Asachinskoe/information';
 import baranjevskoe from '../../assets/Baranjevskoe/information';
+import aginskoe from '../../assets/Aginskoe/information';
 // import ksm from '../../assets/Kamchatstroymateriali/information';
 // import kymroch from '../../assets/Kymroch/information';
 
@@ -12,6 +13,7 @@ const initialState = {
     ametist: { ..._.cloneDeep(ametist), vacancies: null },
     asacha: { ..._.cloneDeep(asacha), vacancies: null },
     baranjevskoe: { ..._.cloneDeep(baranjevskoe), vacancies: null },
+    aginskoe: { ..._.cloneDeep(aginskoe), vacancies: null },
     // ksm: { ..._.cloneDeep(ksm), vacancies: null },
     // kymroch: { ..._.cloneDeep(kymroch), vacancies: null },
   },

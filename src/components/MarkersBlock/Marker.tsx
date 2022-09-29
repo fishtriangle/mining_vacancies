@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Marker.module.scss';
-import leftCorner from './left.png';
-import rightCorner from './right.png';
 import {
   hideRightBlock,
   showRightBlock,
@@ -23,12 +21,12 @@ type Position = {
 type MarkerProps = {
   value: string;
   position: Position;
-  corner: 'left' | 'right';
+  corner: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   id: number;
 };
 
 const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState<number>(0);
   const markerLabel = useRef<HTMLParagraphElement>(null);
   const dispatch = useDispatch();
   const isClosed = useSelector(selectRightBlockIsHide);
@@ -52,7 +50,7 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
   }, [width]);
 
   const labelParams = {
-    left: {
+    ['top-left']: {
       containerStyle: (position: Position) => ({
         top: `calc(${position.top}% - 16px)`,
         left: `${position.left}%`,
@@ -60,10 +58,9 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
       labelStyle: {
         borderBottomLeftRadius: '0',
       },
-      imgSrc: leftCorner,
-      imgClassName: styles.markersBlock_leftCorner,
+      pointer: styles.markersBlock_topLeftCorner,
     },
-    right: {
+    ['top-right']: {
       containerStyle: (position: Position) => ({
         top: `calc(${position.top}% - 16px)`,
         left: `calc(${position.left}% - ${width}px)`,
@@ -71,8 +68,27 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
       labelStyle: {
         borderBottomRightRadius: '0',
       },
-      imgSrc: rightCorner,
-      imgClassName: styles.markersBlock_rightCorner,
+      pointer: styles.markersBlock_topRightCorner,
+    },
+    ['bottom-left']: {
+      containerStyle: (position: Position) => ({
+        top: `calc(${position.top}% - 16px)`,
+        left: `${position.left}%`,
+      }),
+      labelStyle: {
+        borderTopLeftRadius: '0',
+      },
+      pointer: styles.markersBlock_bottomLeftCorner,
+    },
+    ['bottom-right']: {
+      containerStyle: (position: Position) => ({
+        top: `calc(${position.top}% - 16px)`,
+        left: `calc(${position.left}% - ${width}px)`,
+      }),
+      labelStyle: {
+        borderTopRightRadius: '0',
+      },
+      pointer: styles.markersBlock_bottomRightCorner,
     },
   };
 
@@ -91,11 +107,22 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
       >
         {value}
       </p>
-      <img
-        src={labelParams[corner].imgSrc}
-        alt={'Маркер'}
-        className={labelParams[corner].imgClassName}
-      />
+      {/*<img*/}
+      {/*  src={labelParams[corner].imgSrc}*/}
+      {/*  alt={'Маркер'}*/}
+      {/*  className={labelParams[corner].imgClassName}*/}
+      {/*/>*/}
+      <svg
+        className={labelParams[corner].pointer}
+        width='175'
+        height='36'
+        viewBox='0 0 175 36'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path d='M0 2H152L165 31.5' stroke='#FFC40B' strokeWidth='3' />
+        <circle cx='165' cy='31' r='5' fill='white' />
+      </svg>
     </div>
   );
 };

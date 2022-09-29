@@ -1,94 +1,119 @@
+import React, { useState } from 'react';
+
 import styles from './AboutBlock.module.scss';
 import logo from './logo.png';
 import CloseBtn from '../CloseBtn/CloseBtn';
-import React, { useState } from 'react';
-
-const missions = {
-  mission: 'Золото – вечная ценность Земли. Мы имеем честь нести её людям.',
-  values:
-    'Объединяя успешных, мы бережно и ответственно добываем богатства недр, развиваем регионы, повышаем благосостояние семей и доходность для акционеров.',
-};
+import YellowBtn from '../YellowBtn/YellowBtn';
+import { useDispatch } from 'react-redux';
+import {
+  hideRightBlock,
+  showRightBlock,
+} from '../../redux/slices/rightBlockSlice';
 
 const AboutBlock: React.FC = () => {
-  const [isHide, setIsHide] = useState<boolean>(true);
-  const [mission, setMission] = useState<string>('');
+  const [showDevelop, setShowDevelop] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const handleMissionClick = (text: string) => {
-    if (isHide) {
-      setIsHide(false);
-      setMission(text);
-      return;
-    }
-
-    setIsHide(true);
-
+  const handleDevelopmentClick = () => {
+    dispatch(hideRightBlock());
     setTimeout(() => {
-      if (mission !== text) {
-        setMission(text);
-        setIsHide(false);
-      } else {
-        setMission('');
-      }
-    }, 1000);
+      setShowDevelop(!showDevelop);
+      dispatch(showRightBlock());
+    }, 1500);
   };
 
   return (
-    <div className={`fs-6 px-6 pt-7 d-flex ${styles.AboutBlock}`}>
-      <div className={'pe-6 py-1'}>
-        <div className={'d-flex flex-row justify-content-between mb-4'}>
+    <div
+      className={`d-flex justify-content-center flex-column me-5 text-white`}
+    >
+      <div className={`mb-4 block-bg h-75`}>
+        <div className={'d-flex flex-row justify-content-between mb-3'}>
           <img
             src={logo}
             alt={'logo'}
-            className={`align-self-center my-2 ${styles.AboutBlock_logo}`}
+            className={`align-self-center my-2 me-1 ${styles.AboutBlock_logo}`}
           />
-          <h3
-            className={'h5 my-0 mx-2 align-self-center fw-bold text-capitalize'}
-          ></h3>
-          <CloseBtn closeAction={undefined} classNames={''} />
+          <CloseBtn />
         </div>
-        <p className={''}>
-          Highland Gold Mining – производитель золота с прочной репутацией,
-          управляющий активами мирового класса, расположенными в России. Среди
-          них проекты по добыче, освоению и геологоразведке. Компания имеет штат
-          первоклассных специалистов в сфере управления и эксплуатации,
-          обладающих опытом работы в России и за рубежом, а также впечатляющий
-          объем запасов, прошедший аудит в соответствии с международной
-          классификацией JORC.
-        </p>
-        <p className={''}>
-          Деятельность Highland Gold сосредоточена вокруг четырёх основных
-          производственных центров в Хабаровском, Камчатском и Забайкальском
-          краях, а также Чукотском АО. Кроме того, компания является
-          собственником активов в Киргизии.
-        </p>
-        <div className={'d-flex justify-content-around mt-4'}>
-          <span
-            className={`${styles.AboutBlock_missionBtn} ${
-              mission === missions.mission &&
-              styles.AboutBlock_missionBtn__checked
-            }`}
-            onClick={() => handleMissionClick(missions.mission)}
-          >
-            Видение
-          </span>
-          <span
-            className={`${styles.AboutBlock_missionBtn} ${
-              mission === missions.values &&
-              styles.AboutBlock_missionBtn__checked
-            }`}
-            onClick={() => handleMissionClick(missions.values)}
-          >
-            Ценности
-          </span>
-        </div>
-        <div
-          className={`alert alert-warning mt-4 fs-4 ${
-            styles.AboutBlock_alert
-          } ${isHide && styles.AboutBlock_alert__hide}`}
-          role='alert'
-        >
-          {mission}
-        </div>
+        {showDevelop ? (
+          <div className={'add-scrollbar'}>
+            <p className={'text-uppercase text-primary fs-4 fw-bold m-0'}>
+              Наши обязательства
+            </p>
+            <p className={''}>
+              Высокая эффективность Highland Gold в контексте достижения
+              операционных и финансовых показателей берёт своё начало в принятии
+              верных решений и работе Компании с чёткой установкой на устойчивое
+              развитие. Имея это в виду, Компания подтверждает принимаемые на
+              себя обязательства по непрерывному совершенствованию с целью
+              достичь или превзойти лучшие практики, применяемые в
+              горно-металлургической отрасли, в плане порядка взаимодействия со
+              всеми заинтересованными сторонами, местными сообществами, а также
+              регионами присутствия. Мы принимаем во внимание нужды и
+              потребности всех заинтересованных сторон, вкладываем средства в
+              наши активы, кадры и в местные сообщества, относясь при этом с
+              особым вниманием к вопросам охраны труда, промышленной
+              безопасности и защиты окружающей среды.
+            </p>
+            <br />
+            <p className={'text-uppercase text-primary fs-4 fw-bold m-0'}>
+              Наши люди
+            </p>
+            <p className={''}>
+              Долговременный успех и развитие компании Highland Gold неразрывно
+              связаны с долговременной работой на предприятиях нашего персонала,
+              с его развитием. Компания предпринимает все усилия для того, чтобы
+              наряду со своей производственной деятельностью выступать также в
+              роли ответственного бизнеса. Забота о благополучии персонала – это
+              одна из наших ключевых ценностей. Наши сотрудники – наш самый
+              ценный актив. Только с их помощью мы можем реализовать потенциал
+              нашей ресурсной базы.
+            </p>
+            <br />
+            <p className={'text-uppercase text-primary fs-4 fw-bold m-0'}>
+              Промышленная безопасность и охрана труда
+            </p>
+            <p className={''}>
+              В Highland Gold безопасность наших сотрудников – наивысший
+              приоритет. Нашим целевым показателем в области охраны труда и
+              техники безопасности неизменно является нулевой уровень несчастных
+              случаев. Мы нацелены на минимизацию производственных рисков, и для
+              этого предоставляем нашим сотрудникам широкую программу подготовки
+              в области промышленной безопасности. Руководством к действию для
+              Highland Gold является Политика Компании в области охраны труда,
+              промышленной безопасности и охраны окружающей среды, а также
+              Кардинальные правила безопасного поведения, которые являются
+              обязательными к применению на всех наших производственных
+              объектах. Наша система охраны труда и промышленной безопасности
+              полностью соответствует международным сертификационным стандартам.
+            </p>
+          </div>
+        ) : (
+          <div className={''}>
+            <p className={''}>
+              Highland Gold Mining – производитель золота с прочной репутацией,
+              управляющий активами мирового класса, расположенными в России.
+              Среди них проекты по добыче, освоению и геологоразведке. Компания
+              имеет штат первоклассных специалистов в сфере управления и
+              эксплуатации, обладающих опытом работы в России и за рубежом, а
+              также впечатляющий объем запасов, прошедший аудит в соответствии с
+              международной классификацией JORC.
+            </p>
+            <p className={''}>
+              Деятельность Highland Gold сосредоточена вокруг четырёх основных
+              производственных центров в Хабаровском, Камчатском и Забайкальском
+              краях, а также Чукотском АО. Кроме того, компания является
+              собственником активов в Киргизии.
+            </p>
+          </div>
+        )}
+      </div>
+      <div className={'d-flex justify-content-around'}>
+        <YellowBtn
+          text={showDevelop ? 'О Компании' : 'Устойчивое развитие'}
+          onClick={handleDevelopmentClick}
+        />
+        <YellowBtn text={'Новости'} onClick={() => 1} />
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import { setCurrentId } from '../../redux/slices/vacanciesSlice';
 import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
 import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
-import Text from '../Text/Text';
 
 const EnterpriseBlock: React.FC = () => {
   const enterprisesInfo = useSelector(selectCurrentEnterprise);
@@ -23,53 +22,59 @@ const EnterpriseBlock: React.FC = () => {
   }
 
   return (
-    <div className={'py-5 px-5 d-flex align-items-center w-100 flex-column'}>
-      <div className={'d-flex flex-row justify-content-between mb-4 w-100'}>
-        <img
-          src={logo}
-          alt={'logo'}
-          className={`align-self-center my-2 me-1 ${styles.enterpriseBlock_highlandLogo}`}
-        />
-        <h3 className={'h5 my-0 mx-4 align-self-center fw-bold text-uppercase'}>
-          <Text>{title}</Text>
-        </h3>
-        <CloseBtn closeAction={undefined} classNames={''} />
-      </div>
-      <div className={styles.enterpriseBlock_description}>
-        <EnterpriseDescription id={id} />
-      </div>
+    <div className={` me-5 text-white w-100`}>
+      <div className={'me-5 h-100 d-flex justify-content-center flex-column'}>
+        <div className={'mb-3 block-bg h-60'}>
+          <div className={'d-flex flex-row justify-content-between mb-3'}>
+            <img
+              src={logo}
+              alt={'logo'}
+              className={`align-self-center my-2 me-1 ${styles.enterpriseBlock_highlandLogo}`}
+            />
+            <CloseBtn />
+          </div>
 
-      <div className={'w-100 mb-5'}>
-        <Carousel
-          className={`mt-2 ${styles.enterpriseBlock_carousel}`}
-          renderCenterLeftControls={null}
-          renderCenterRightControls={null}
-          wrapAround={true}
-          slidesToShow={4}
-          defaultControlsConfig={{
-            pagingDotsClassName: styles.enterpriseBlock_carouselDots,
-            pagingDotsContainerClassName:
-              styles.enterpriseBlock_carouselDotsContainer,
-          }}
-        >
-          {photos.map(
-            ({ small, alt }: { small: string; alt: string }, index: number) => (
-              <img
-                src={small}
-                alt={alt}
-                key={index}
-                width={'200px'}
-                onClick={() =>
-                  dispatch(setImages({ images: photos, currentImage: index }))
-                }
-                className={'btn border-0 shadow-none'}
-              />
-            )
-          )}
-        </Carousel>
-      </div>
+          <div className={'add-scrollbar'}>
+            <EnterpriseDescription id={id} title={title} />
+          </div>
+        </div>
+        <div className={'mb-5 mx-3 w-90 align-self-center'}>
+          <Carousel
+            className={`mt-2 ${styles.enterpriseBlock_carousel}`}
+            renderCenterLeftControls={null}
+            renderCenterRightControls={null}
+            wrapAround={true}
+            slidesToShow={4}
+            defaultControlsConfig={{
+              pagingDotsClassName: styles.enterpriseBlock_carouselDots,
+              pagingDotsContainerClassName:
+                styles.enterpriseBlock_carouselDotsContainer,
+            }}
+          >
+            {photos.map(
+              (
+                { small, alt }: { small: string; alt: string },
+                index: number
+              ) => (
+                <img
+                  src={small}
+                  alt={alt}
+                  key={index}
+                  width={'200px'}
+                  onClick={() =>
+                    dispatch(setImages({ images: photos, currentImage: index }))
+                  }
+                  className={'btn border-0 shadow-none'}
+                />
+              )
+            )}
+          </Carousel>
+        </div>
 
-      <YellowBtn onClick={() => handleVacancies(id)} text={'Вакансии'} />
+        <div className={'d-flex justify-content-center'}>
+          <YellowBtn onClick={() => handleVacancies(id)} text={'Вакансии'} />
+        </div>
+      </div>
     </div>
   );
 };

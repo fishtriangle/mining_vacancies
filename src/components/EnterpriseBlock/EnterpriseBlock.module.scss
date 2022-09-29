@@ -11,30 +11,23 @@
 
   &_highlandLogo {
     height: 100px;
-    background-color: rgba(255, 229, 157, 0.4);
-    padding: 10px;
-    border-radius: 15px;
   }
 
   &_description {
     overflow-y: scroll;
-    height: 50%;
+    height: 72%;
+    padding-right: 15px;
 
     &::-webkit-scrollbar {
       width: 10px;
-      height: 10px;
     }
     &::-webkit-scrollbar-track {
-      background-color: #42403a;
+      background-color: #ffffff;
       border-radius: 20px;
-      border: 9px;
-      border-color: black;
-
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #ffe59d;
-      border-radius: 15px;
-      border: 1px;
+      background-color: #FFC40B;
+      border-radius: 20px;
     }
   }
 
