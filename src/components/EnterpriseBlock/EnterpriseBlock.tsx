@@ -40,15 +40,15 @@ const EnterpriseBlock: React.FC = () => {
         </div>
         <div className={'mb-5 mx-3 w-90 align-self-center'}>
           <Carousel
-            className={`mt-2 ${styles.enterpriseBlock_carousel}`}
+            className={`mt-2`}
             renderCenterLeftControls={null}
             renderCenterRightControls={null}
             wrapAround={true}
             slidesToShow={4}
             defaultControlsConfig={{
-              pagingDotsClassName: styles.enterpriseBlock_carouselDots,
+              pagingDotsClassName: styles.editPage_carouselDots,
               pagingDotsContainerClassName:
-                styles.enterpriseBlock_carouselDotsContainer,
+                styles.editPage_carouselDotsContainer,
             }}
           >
             {photos.map(

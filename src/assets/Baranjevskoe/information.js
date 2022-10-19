@@ -33,7 +33,9 @@ import logo from './logo.png';
 
 const info = {
   id: 3,
-  title: 'АО «КАМЧАТСКОЕ ЗОЛОТО»\n АО «КАМГОЛД»',
+  title: 'АО «КАМЧАТСКОЕ ЗОЛОТО»',
+  ///*
+  //  АО «КАМГОЛД»*/
   photos: [
     {
       small: smallPhoto1,

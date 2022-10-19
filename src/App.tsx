@@ -14,6 +14,13 @@ import {
 import { resetImage } from './redux/slices/fullScreenImageSlice';
 import { resetVacancies } from './redux/slices/vacanciesSlice';
 import { setCurrent } from './redux/slices/enterprisesSlice';
+import Enterprise from './pages/EnterpriseEdit/Enterprise';
+import News from './pages/NewsEdit/News';
+import CreateNews from './pages/NewsEdit/CreateNews';
+import EditNews from './pages/NewsEdit/EditNews';
+import EditEnterprisePhoto from './pages/EnterpriseEdit/EditEnterprisePhoto';
+import EditEnterpriseVacancies from './pages/EnterpriseEdit/EditEnterpriseVacancies';
+import EditEnterpriseDescription from './pages/EnterpriseEdit/EditEnterpriseDescription';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +43,24 @@ function App() {
 
       <Routes>
         <Route path={'/'} element={<Home />} />
-        <Route path={'edit'} element={<Edit />} />
+        <Route path={'edit'} element={<Edit />}>
+          <Route path={'news'} element={<News />} />
+          <Route path={'editNews/:id'} element={<EditNews />} />
+          <Route path={'createNews'} element={<CreateNews />} />
+          <Route
+            path={'enterprise/:id/photo'}
+            element={<EditEnterprisePhoto />}
+          />
+          <Route
+            path={'enterprise/:id/vacancies'}
+            element={<EditEnterpriseVacancies />}
+          />
+          <Route
+            path={'enterprise/:id'}
+            element={<EditEnterpriseDescription />}
+          />
+          <Route path={'enterprise'} element={<Enterprise />} />
+        </Route>
       </Routes>
       <BackgroundMusic />
     </div>
