@@ -53,7 +53,10 @@ const IntroBlock: React.FC = () => {
         </ul>
         <p className={'m-0 text-uppercase'}>
           Выбирай предприятие, жми на кнопку{' '}
-          <Link to={'edit'} className={'text-decoration-none text-white'}>
+          <Link
+            to={'edit/enterprise'}
+            className={'text-decoration-none text-white'}
+          >
             «Вакансии»
           </Link>{' '}
           и стань частью нашей команды!

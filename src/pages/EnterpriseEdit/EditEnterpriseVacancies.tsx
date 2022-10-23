@@ -4,7 +4,7 @@ import Carousel from 'nuka-carousel';
 import { setImages } from '../../redux/slices/fullScreenImageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterpriseVacancies';
+import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
 import validateForm from '../../utilities/validate';
 import handleVacanciesFile from '../../utilities/handleVacanciesFile';
 import { Link } from 'react-router-dom';

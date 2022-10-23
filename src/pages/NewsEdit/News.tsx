@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import styles from '../Edit.module.scss';
 import { useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
-import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterpriseVacancies';
+import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 

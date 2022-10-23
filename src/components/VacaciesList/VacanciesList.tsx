@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client';
-import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterpriseVacancies';
+import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
 import React from 'react';
 
 import Text from '../Text/Text';
