@@ -1,64 +1,169 @@
 import React, { useRef, useState } from 'react';
-import styles from '../Edit.module.scss';
-import Carousel from 'nuka-carousel';
-import { setImages } from '../../redux/slices/fullScreenImageSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
-import validateForm from '../../utilities/validate';
-import handleVacanciesFile from '../../utilities/handleVacanciesFile';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
+import Loader from '../../components/Loader/Loader';
+import { readFile } from '../../utilities/filesInteractions';
+import { getEnterprise, getEnterpriseVars } from '../../common/types';
 
 const EditEnterpriseDescription: React.FC = () => {
-  const enterprisesInfo = useSelector(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO state type should be written
-    (state) => state.enterprisesInfo.enterprises
-  );
-
-  const dispatch = useDispatch();
-
-  const { photos } = enterprisesInfo.ametist;
-
-  const fileItem = useRef<HTMLInputElement>(null);
-
-  const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
-  const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
-  const [fileErrors, setFileErrors] = useState<string | null>(null);
-
-  const errorsMap = {
-    enterprise: setEnterpriseErrors,
-    fileItem: setFileErrors,
-  };
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const id: string = event.target.value;
-    setEnterpriseId(id);
-  };
+  const id = Number(useParams().id);
 
   const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [title, setTitle] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [contacts, setContacts] = useState<string | null>(null);
+  const [markerValue, setMarkerValue] = useState<string | null>(null);
+  const [markerTop, setMarkerTop] = useState<string | null>(null);
+  const [markerLeft, setMarkerLeft] = useState<string | null>(null);
+  const [markerCorner, setMarkerCorner] = useState<string | null>(null);
+
+  // const [test, setTest] = useState<null | string>(null);
+
+  const logoFileItem = useRef<HTMLInputElement>(null);
+
+  const { data, loading, error, refetch } = useQuery<
+    getEnterprise,
+    getEnterpriseVars
+  >(GET_ONE_ENTERPRISE, {
+    variables: {
+      pollInterval: 3000,
+      id,
+    },
+  });
+
+  if (loading) return <Loader />;
+  if (error)
+    return (
+      <>
+        <p className={'text-center'}>
+          Ошибка загрузки информации о предприятии...
+        </p>
+        <p>{error.message}</p>
+      </>
+    );
+
+  const handelInputChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    handler: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    handler(event.target.value);
+  };
+
+  const handleFormSubmit = async (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.FormEvent<HTMLTextAreaElement>
+  ) => {
+    let logo: string | ArrayBuffer | null = null;
     event.preventDefault();
-    Object.values(errorsMap).forEach((setError) => setError(null));
+    const file = logoFileItem.current?.files?.[0];
 
-    const file = fileItem.current?.files?.[0];
-
-    const errors = validateForm(enterpriseId, file);
-    if (errors.length > 0) {
-      errors.forEach(({ input, message }) => {
-        errorsMap[input as keyof typeof errorsMap](message);
-      });
-      return;
+    if (file) {
+      // console.log(file);
+      logo = await readFile(file);
+      // console.log(typeof base64File);
+      // if (typeof base64File === 'string') {
+      // const newFile = dataURLtoFile(base64File, '1.jpg');
+      // console.log(newFile);
+      // setTest(URL.createObjectURL(newFile));
+      // }
     }
 
-    handleVacanciesFile(file, enterpriseId, updateEnterprise);
+    const input = {
+      id,
+      title: title || undefined,
+      logo: logo || undefined,
+      description: description || undefined,
+      contacts: contacts || undefined,
+      marker:
+        markerValue || markerTop || markerLeft || markerCorner
+          ? {
+              value: markerValue || undefined,
+              top: Number(markerTop) || undefined,
+              left: Number(markerLeft) || undefined,
+              corner: markerCorner || undefined,
+            }
+          : undefined,
+    };
+
+    updateEnterprise({
+      variables: { input },
+    })
+      .then(({ data }) => {
+        refetch().catch((e) => console.error(e));
+        alert(JSON.stringify(data.updateEnterprise.content));
+      })
+      .catch((e) => console.error(e));
   };
+
+  // const logoFromData = (logoStr: string) => {
+  //   console.log(logoStr);
+  //   if (logoStr) {
+  //     const file = dataURLtoFile(logoStr, '1.png');
+  //     return URL.createObjectURL(file);
+  //   }
+  // };
+
+  // const enterprisesInfo = useSelector(
+  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   // @ts-ignore
+  //   // TODO state type should be written
+  //   (state) => state.enterprisesInfo.enterprises
+  // );
+
+  // const dispatch = useDispatch();
+  //
+  // const { photos } = enterprisesInfo.ametist;
+  //
+  // const fileItem = useRef<HTMLInputElement>(null);
+  //
+  // const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
+  // const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
+  // const [fileErrors, setFileErrors] = useState<string | null>(null);
+  //
+  // const errorsMap = {
+  //   enterprise: setEnterpriseErrors,
+  //   fileItem: setFileErrors,
+  // };
+  // const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const id: string = event.target.value;
+  //   setEnterpriseId(id);
+  // };
+  //
+  // const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
+  //
+  // const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   Object.values(errorsMap).forEach((setError) => setError(null));
+  //
+  //   const file = fileItem.current?.files?.[0];
+  //
+  //   const errors = validateForm(enterpriseId, file);
+  //   if (errors.length > 0) {
+  //     errors.forEach(({ input, message }) => {
+  //       errorsMap[input as keyof typeof errorsMap](message);
+  //     });
+  //     return;
+  //   }
+  //
+  //   handleVacanciesFile(file, enterpriseId, updateEnterprise);
+  // };
 
   return (
     <>
+      {/*{test ? <img src={test} /> : ''}*/}
+      {/*{data?.getEnterprise.logo ? (*/}
+      {/*  <img src={logoFromData(data?.getEnterprise.logo)} />*/}
+      {/*) : (*/}
+      {/*  ''*/}
+      {/*)}*/}
       <h3 className={'w-75 mb-3 mt-0'}>Редактирование описания предприятия</h3>
-      <form className={'w-75'}>
+      <form className={'w-75'} onSubmit={handleFormSubmit}>
         <div className={'form-group row mb-2'}>
           <label htmlFor={'enterpriseTitle'} className='col-3 col-form-label'>
             Название предприятия:
@@ -68,6 +173,8 @@ const EditEnterpriseDescription: React.FC = () => {
               id={'enterpriseTitle'}
               className={'form-control'}
               placeholder={'Напишите текст здесь...'}
+              onChange={(event) => handelInputChange(event, setTitle)}
+              value={title ?? data?.getEnterprise.title ?? ''}
             />
           </div>
         </div>
@@ -85,6 +192,8 @@ const EditEnterpriseDescription: React.FC = () => {
               rows={3}
               placeholder={'Напишите текст здесь...'}
               className={'form-control'}
+              onChange={(event) => handelInputChange(event, setDescription)}
+              value={description ?? data?.getEnterprise.description ?? ''}
             />
           </div>
         </div>
@@ -98,12 +207,14 @@ const EditEnterpriseDescription: React.FC = () => {
           </label>
           <div className={'col-9'}>
             <textarea
-              id={'enterpriseDescription'}
+              id={'enterpriseContacts'}
               rows={2}
               placeholder={
                 'Несколько контактов необходимо разделять символом ";"'
               }
               className={'form-control'}
+              onChange={(event) => handelInputChange(event, setContacts)}
+              value={contacts ?? data?.getEnterprise.contacts ?? ''}
             />
           </div>
         </div>
@@ -116,7 +227,7 @@ const EditEnterpriseDescription: React.FC = () => {
             <input
               className='form-control'
               type='file'
-              // ref={fileItem}
+              ref={logoFileItem}
               multiple={false}
             />
           </div>
@@ -133,6 +244,8 @@ const EditEnterpriseDescription: React.FC = () => {
               id={'markerValue'}
               className={'form-control'}
               placeholder={'Напишите текст здесь...'}
+              onChange={(event) => handelInputChange(event, setMarkerValue)}
+              value={markerValue ?? data?.getEnterprise.marker?.value ?? ''}
             />
           </div>
           <label
@@ -146,6 +259,8 @@ const EditEnterpriseDescription: React.FC = () => {
               id={'markerTop'}
               className={'form-control'}
               placeholder={'Y'}
+              onChange={(event) => handelInputChange(event, setMarkerTop)}
+              value={markerTop ?? data?.getEnterprise.marker?.top ?? ''}
             />
           </div>
           <label className={'col-1 col-form-label ps-3'}>Ось Х:</label>
@@ -154,6 +269,8 @@ const EditEnterpriseDescription: React.FC = () => {
               id={'markerLeft'}
               className={'form-control'}
               placeholder={'X'}
+              onChange={(event) => handelInputChange(event, setMarkerLeft)}
+              value={markerLeft ?? data?.getEnterprise.marker?.left ?? ''}
             />
           </div>
         </div>
@@ -167,6 +284,7 @@ const EditEnterpriseDescription: React.FC = () => {
               className={'me-1'}
               name={'corner'}
               value={'bottom-right'}
+              onChange={(event) => handelInputChange(event, setMarkerCorner)}
             />
             <label htmlFor={'bottomRightCorner'}>Снизу-справа</label>
           </div>
@@ -177,6 +295,7 @@ const EditEnterpriseDescription: React.FC = () => {
               className={'me-1'}
               name={'corner'}
               value={'bottom-left'}
+              onChange={(event) => handelInputChange(event, setMarkerCorner)}
             />
             <label htmlFor={'bottomLeftCorner'}>Снизу-слева</label>
           </div>
@@ -187,6 +306,7 @@ const EditEnterpriseDescription: React.FC = () => {
               className={'me-1'}
               name={'corner'}
               value={'top-right'}
+              onChange={(event) => handelInputChange(event, setMarkerCorner)}
             />
             <label htmlFor={'topRightCorner'}>Сверху-справа</label>
           </div>
@@ -197,6 +317,7 @@ const EditEnterpriseDescription: React.FC = () => {
               className={'me-1'}
               name={'corner'}
               value={'top-left'}
+              onChange={(event) => handelInputChange(event, setMarkerCorner)}
             />
             <label htmlFor={'topLeftCorner'}>Сверху-слева</label>
           </div>

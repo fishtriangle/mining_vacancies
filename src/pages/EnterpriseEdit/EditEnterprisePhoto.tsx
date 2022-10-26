@@ -3,156 +3,184 @@ import styles from '../Edit.module.scss';
 import Carousel from 'nuka-carousel';
 import { setImages } from '../../redux/slices/fullScreenImageSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
-import validateForm from '../../utilities/validate';
+// import validateForm from '../../utilities/validate';
 import handleVacanciesFile from '../../utilities/handleVacanciesFile';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { getEnterprise, getEnterpriseVars } from '../../common/types';
+import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
+import Loader from '../../components/Loader/Loader';
+import { readFile } from '../../utilities/filesInteractions';
 
 const Enterprise: React.FC = () => {
-  const enterprisesInfo = useSelector(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO state type should be written
-    (state) => state.enterprisesInfo.enterprises
-  );
+  const id = Number(useParams().id);
 
-  const dispatch = useDispatch();
+  const photoFileItems = useRef<HTMLInputElement>(null);
 
-  const { photos } = enterprisesInfo.ametist;
+  const { data, loading, error, refetch } = useQuery<
+    getEnterprise,
+    getEnterpriseVars
+  >(GET_ONE_ENTERPRISE, {
+    variables: {
+      pollInterval: 3000,
+      id,
+    },
+  });
 
-  const fileItem = useRef<HTMLInputElement>(null);
+  if (loading) return <Loader />;
+  if (error)
+    return (
+      <>
+        <p className={'text-center'}>Ошибка загрузки списка фотографий...</p>
+        <p>{error.message}</p>
+      </>
+    );
 
-  const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
-  const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
-  const [fileErrors, setFileErrors] = useState<string | null>(null);
-
-  const errorsMap = {
-    enterprise: setEnterpriseErrors,
-    fileItem: setFileErrors,
-  };
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const id: string = event.target.value;
-    setEnterpriseId(id);
-  };
-
-  const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSendPhoto = (event: React.FormEvent<HTMLFormElement>) => {
+    const photos: (string | ArrayBuffer)[] | null = null;
     event.preventDefault();
-    Object.values(errorsMap).forEach((setError) => setError(null));
-
-    const file = fileItem.current?.files?.[0];
-
-    const errors = validateForm(enterpriseId, file);
-    if (errors.length > 0) {
-      errors.forEach(({ input, message }) => {
-        errorsMap[input as keyof typeof errorsMap](message);
-      });
-      return;
+    const files = photoFileItems.current?.files;
+    console.log(files?.length);
+    if (files) {
+      // photos = files.map(async (file) => (await readFile(file)))
+      //   ;
+      // console.log(typeof base64File);
+      // if (typeof base64File === 'string') {
+      // const newFile = dataURLtoFile(base64File, '1.jpg');
+      // console.log(newFile);
+      // setTest(URL.createObjectURL(newFile));
+      // }
     }
 
-    handleVacanciesFile(file, enterpriseId, updateEnterprise);
+    //   const input = {
+    //     id,
+    //     title: title || undefined,
+    //     logo: logo || undefined,
+    //     description: description || undefined,
+    //     contacts: contacts || undefined,
+    //     marker:
+    //       markerValue || markerTop || markerLeft || markerCorner
+    //         ? {
+    //             value: markerValue || undefined,
+    //             top: Number(markerTop) || undefined,
+    //             left: Number(markerLeft) || undefined,
+    //             corner: markerCorner || undefined,
+    //           }
+    //         : undefined,
+    //   };
+    //
+    //   updateEnterprise({
+    //     variables: { input },
+    //   })
+    //     .then(({ data }) => {
+    //       refetch().catch((e) => console.error(e));
+    //       alert(JSON.stringify(data.updateEnterprise.content));
+    //     })
+    //     .catch((e) => console.error(e));
   };
 
   return (
-    <form onSubmit={onSubmit} className={'w-75 mx-auto'}>
-      <fieldset className={'form-group mb-4'}>
-        <legend>Загрузка фотографий</legend>
-        <div className={'row'}>
-          <label htmlFor='photoFiles' className='col-8 col-form-label'>
-            Формат фотографий: jpg или png; размер: не менее 1920x1080px
-          </label>
-        </div>
-
-        <div className={'row'}>
-          <div className={'col-8'}>
-            <input
-              className='form-control col-8'
-              type='file'
-              ref={fileItem}
-              multiple={true}
-            />
+    <>
+      <form className={'w-75 mx-auto'} onSubmit={handleSendPhoto}>
+        <fieldset className={'form-group mb-4'}>
+          <legend>Загрузка фотографий</legend>
+          <div className={'row'}>
+            <label htmlFor='photoFiles' className='col-8 col-form-label'>
+              Формат фотографий: jpg или png; размер: не менее 1920x1080px
+            </label>
           </div>
-        </div>
-        {/*<div className={'col-2'}>*/}
-        {/*  <span*/}
-        {/*    className={`fw-bold small text-danger ${*/}
-        {/*      !fileErrors && 'opacity-0'*/}
-        {/*    }`}*/}
-        {/*  >*/}
-        {/*    * {fileErrors}*/}
-        {/*  </span>*/}
-        {/*</div>*/}
 
-        <div className={'row'}>
-          <button
-            type='button'
-            className='btn bg-white px-5 text-black fw-bold col-3 mt-3'
-          >
-            Загрузить
-          </button>
-        </div>
-      </fieldset>
+          <div className={'row'}>
+            <div className={'col-8'}>
+              <input
+                className='form-control col-8'
+                type='file'
+                ref={photoFileItems}
+                multiple={true}
+              />
+            </div>
+          </div>
+
+          <div className={'row'}>
+            <button
+              type='submit'
+              className='btn bg-white px-5 text-black fw-bold col-3 mt-3'
+            >
+              Загрузить
+            </button>
+          </div>
+        </fieldset>
+      </form>
       <hr />
-      <fieldset className={'form-group'}>
-        <legend>Удаление фотографий</legend>
-        <div className={'row'}>
-          <div
-            className={`col-12 my-0 mx-0 align-self-center ${styles.editPage_carouselContainer}`}
-          >
-            <Carousel
-              className={`mt-2`}
-              renderCenterLeftControls={null}
-              renderCenterRightControls={null}
-              wrapAround={true}
-              slidesToShow={8}
-              defaultControlsConfig={{
-                pagingDotsClassName: styles.editPage_carouselDots,
-                pagingDotsContainerClassName:
-                  styles.editPage_carouselDotsContainer,
-              }}
-            >
-              {photos.map(
-                (
-                  { small, alt }: { small: string; alt: string },
-                  index: number
-                ) => (
-                  <img
-                    src={small}
-                    alt={alt}
-                    key={index}
-                    width={'200px'}
-                    onClick={() =>
-                      dispatch(
-                        setImages({ images: photos, currentImage: index })
-                      )
-                    }
-                    className={'btn border-0 shadow-none'}
-                  />
-                )
-              )}
-            </Carousel>
-          </div>
-        </div>
-        <div className={'row'}>
-          <button
-            type='button'
-            className='btn bg-warning px-5 text-black fw-bold col-3 me-3'
-          >
-            Удалить
-          </button>
-          <div className={'col-4'}>
-            <Link
-              to={'/edit/enterprise'}
-              className={'btn btn-outline-warning text-warning px-5'}
-            >
-              Отмена
-            </Link>
-          </div>
-        </div>
-      </fieldset>
-    </form>
+
+      {data?.getEnterprise.photos ?? (
+        <form className={'w-75 mx-auto'}>
+          <fieldset className={'form-group'}>
+            <legend>Удаление фотографий</legend>
+            <div className={'row'}>
+              <div
+                className={`col-12 my-0 mx-0 align-self-center ${styles.editPage_carouselContainer}`}
+              >
+                <Carousel
+                  className={`mt-2`}
+                  renderCenterLeftControls={null}
+                  renderCenterRightControls={null}
+                  wrapAround={true}
+                  slidesToShow={8}
+                  defaultControlsConfig={{
+                    pagingDotsClassName: styles.editPage_carouselDots,
+                    pagingDotsContainerClassName:
+                      styles.editPage_carouselDotsContainer,
+                  }}
+                >
+                  {data?.getEnterprise.photos.map(
+                    ({
+                      id,
+                      small,
+                      alt,
+                    }: {
+                      id: number;
+                      small?: string;
+                      alt?: string;
+                    }) => (
+                      <img
+                        src={small}
+                        alt={alt}
+                        key={id}
+                        width={'200px'}
+                        // onClick={() =>
+                        //   dispatch(
+                        //     setImages({ images: photos, currentImage: index })
+                        //   )
+                        // }
+                        className={'btn border-0 shadow-none'}
+                      />
+                    )
+                  )}
+                </Carousel>
+              </div>
+            </div>
+            <div className={'row'}>
+              <button
+                type='button'
+                className='btn bg-warning px-5 text-black fw-bold col-3 me-3'
+              >
+                Удалить
+              </button>
+              <div className={'col-4'}>
+                <Link
+                  to={'/edit/enterprise'}
+                  className={'btn btn-outline-warning text-warning px-5'}
+                >
+                  Отмена
+                </Link>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      )}
+    </>
   );
 };
 

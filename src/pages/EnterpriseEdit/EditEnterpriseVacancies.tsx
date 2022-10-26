@@ -1,62 +1,69 @@
 import React, { useRef, useState } from 'react';
-import styles from '../Edit.module.scss';
-import Carousel from 'nuka-carousel';
-import { setImages } from '../../redux/slices/fullScreenImageSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
-import validateForm from '../../utilities/validate';
-import handleVacanciesFile from '../../utilities/handleVacanciesFile';
-import { Link } from 'react-router-dom';
+import { validateVacancyFile } from '../../utilities/validate';
+import { Link, useParams } from 'react-router-dom';
+import { readFile } from '../../utilities/filesInteractions';
+import { parse } from '../../utilities/cssParseSync';
+
+interface Vacancy {
+  id?: number;
+  vacancy?: string;
+  requirements?: string;
+  docs?: string;
+  salary?: string;
+  authorId?: number;
+}
 
 const EditEnterpriseVacancies: React.FC = () => {
-  const enterprisesInfo = useSelector(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO state type should be written
-    (state) => state.enterprisesInfo.enterprises
-  );
-
-  const dispatch = useDispatch();
-
-  const { photos } = enterprisesInfo.ametist;
-
-  const fileItem = useRef<HTMLInputElement>(null);
-
-  const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
-  const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
-  const [fileErrors, setFileErrors] = useState<string | null>(null);
-
-  const errorsMap = {
-    enterprise: setEnterpriseErrors,
-    fileItem: setFileErrors,
-  };
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const id: string = event.target.value;
-    setEnterpriseId(id);
-  };
+  const id = Number(useParams().id);
 
   const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [fileErrors, setFileErrors] = useState<string | null>(null);
+
+  const fileVacancies = useRef<HTMLInputElement>(null);
+
+  const handleFormSubmit = async (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.FormEvent<HTMLTextAreaElement>
+  ) => {
+    let vacanciesStr: string | ArrayBuffer | null = null;
+    let vacancies: undefined | Vacancy[];
     event.preventDefault();
-    Object.values(errorsMap).forEach((setError) => setError(null));
-
-    const file = fileItem.current?.files?.[0];
-
-    const errors = validateForm(enterpriseId, file);
-    if (errors.length > 0) {
-      errors.forEach(({ input, message }) => {
-        errorsMap[input as keyof typeof errorsMap](message);
+    const file = fileVacancies.current?.files?.[0];
+    const error = validateVacancyFile(file);
+    if (error) {
+      setFileErrors(error);
+    } else if (file) {
+      setFileErrors(null);
+      vacanciesStr = await readFile(file, 'string');
+      console.log(vacanciesStr);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      vacancies = parse(vacanciesStr, {
+        columns: ['vacancy', 'requirements', 'docs', 'salary'],
+        from_line: 2,
       });
-      return;
-    }
 
-    handleVacanciesFile(file, enterpriseId, updateEnterprise);
+      const input = {
+        id,
+        vacancies,
+      };
+
+      updateEnterprise({
+        variables: { input },
+      })
+        .then(({ data }) => {
+          alert(JSON.stringify(data.updateEnterprise.content));
+        })
+        .catch((e) => console.error(e));
+    }
   };
 
   return (
-    <form onSubmit={onSubmit} className={'w-50 mx-auto mt-6'}>
+    <form onSubmit={handleFormSubmit} className={'w-50 mx-auto mt-6'}>
       <fieldset className={'form-group'}>
         <legend className={'mb-4'}>Обновление списка вакансий</legend>
         <div className={'row mb-4'}>
@@ -64,20 +71,18 @@ const EditEnterpriseVacancies: React.FC = () => {
             Только CSV файлы:
           </label>
           <div className={'col-7'}>
-            <input className='form-control' type='file' ref={fileItem} />
+            <input className='form-control' type='file' ref={fileVacancies} />
           </div>
-          {/*<span*/}
-          {/*  className={`fw-bold small text-danger ${*/}
-          {/*    !fileErrors && 'opacity-0'*/}
-          {/*  }`}*/}
-          {/*>*/}
-          {/*  * {fileErrors}*/}
-          {/*</span>*/}
+          {fileErrors && (
+            <div className={'col-2 small text-danger fw-bold pt-2'}>
+              {fileErrors}
+            </div>
+          )}
         </div>
         <div className={'row '}>
           <div className={'col-4'}>
             <button
-              type='button'
+              type='submit'
               className='btn btn-warning px-5 text-black fw-bold me-3'
             >
               Отправить

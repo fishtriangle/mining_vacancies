@@ -9,7 +9,7 @@ export const CREATE_ENTERPRISE = gql`
 `;
 
 export const UPDATE_ENTERPRISE = gql`
-  mutation updateEnterprise($input: EnterpriseInput) {
+  mutation updateEnterprise($input: EnterpriseUpdateInput) {
     updateEnterprise(input: $input) {
       content
     }

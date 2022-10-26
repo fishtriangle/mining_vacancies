@@ -1,14 +1,17 @@
 import React, { useRef, useState } from 'react';
 import styles from '../Edit.module.scss';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
+import {
+  CREATE_ENTERPRISE,
+  DELETE_ENTERPRISE,
+} from '../../graphql/mutations/enterprise';
 import { GET_ALL_ENTERPRISES } from '../../graphql/query/enterprise';
 import Loader from '../../components/Loader/Loader';
 
 const Enterprise: React.FC = () => {
   const [createEnterprise] = useMutation(CREATE_ENTERPRISE);
+  const [deleteEnterprise] = useMutation(DELETE_ENTERPRISE);
   const enterpriseName = useRef<HTMLInputElement>(null);
 
   const [errors, setError] = useState<{ create: string | null }>({
@@ -30,8 +33,6 @@ const Enterprise: React.FC = () => {
       </>
     );
 
-  console.log(data.getAllEnterprises);
-
   const handleCreateEnterpriseClick = () => {
     if (!enterpriseName.current?.value) {
       setError({
@@ -51,6 +52,17 @@ const Enterprise: React.FC = () => {
         .catch((e) => console.error(e));
       enterpriseName.current.value = '';
     }
+  };
+
+  const handleDeleteEnterpriseClick = (index: number) => {
+    deleteEnterprise({
+      variables: { deleteEnterpriseId: index },
+    })
+      .then(({ data }) => {
+        refetch().catch((e) => console.error(e));
+        alert(JSON.stringify(data.deleteEnterprise.content));
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
@@ -107,19 +119,19 @@ const Enterprise: React.FC = () => {
                   <td>{enterprise.title}</td>
                   <td className={'d-flex flex-row justify-content-end'}>
                     <Link
-                      to={`/edit/enterprise/${index + 1}`}
+                      to={`/edit/enterprise/${enterprise.id}`}
                       className='btn btn-sm bg-white text-black fw-bold me-3'
                     >
                       Изменить
                     </Link>
                     <Link
-                      to={`/edit/enterprise/${index + 1}/vacancies`}
+                      to={`/edit/enterprise/${enterprise.id}/vacancies`}
                       className='btn btn-sm bg-white text-black fw-bold me-3'
                     >
                       Вакансии
                     </Link>
                     <Link
-                      to={`/edit/enterprise/${index + 1}/photo`}
+                      to={`/edit/enterprise/${enterprise.id}/photo`}
                       className='btn btn-sm bg-white text-black fw-bold me-3'
                     >
                       Фотографии
@@ -127,6 +139,7 @@ const Enterprise: React.FC = () => {
                     <button
                       type='button'
                       className='btn btn-sm bg-warning text-black fw-bold'
+                      onClick={() => handleDeleteEnterpriseClick(enterprise.id)}
                     >
                       Удалить
                     </button>
