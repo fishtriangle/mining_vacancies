@@ -34,3 +34,8 @@ export interface getEnterpriseVars {
   pollInterval: number;
   id: number;
 }
+
+export interface inputPhoto {
+  img: string | ArrayBuffer | null;
+  alt?: string;
+}

@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
-import styles from '../Edit.module.scss';
-import Carousel from 'nuka-carousel';
-import { setImages } from '../../redux/slices/fullScreenImageSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
-// import validateForm from '../../utilities/validate';
-import handleVacanciesFile from '../../utilities/handleVacanciesFile';
+import {
+  DELETE_PHOTOS,
+  UPDATE_ENTERPRISE,
+} from '../../graphql/mutations/enterprise';
 import { Link, useParams } from 'react-router-dom';
-import { getEnterprise, getEnterpriseVars } from '../../common/types';
+import {
+  getEnterprise,
+  getEnterpriseVars,
+  inputPhoto,
+} from '../../common/types';
 import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
 import Loader from '../../components/Loader/Loader';
 import { readFile } from '../../utilities/filesInteractions';
@@ -18,12 +20,15 @@ const Enterprise: React.FC = () => {
 
   const photoFileItems = useRef<HTMLInputElement>(null);
 
+  const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
+  const [deletePhotos] = useMutation(DELETE_PHOTOS);
+
   const { data, loading, error, refetch } = useQuery<
     getEnterprise,
     getEnterpriseVars
   >(GET_ONE_ENTERPRISE, {
     variables: {
-      pollInterval: 3000,
+      pollInterval: 6000,
       id,
     },
   });
@@ -37,47 +42,77 @@ const Enterprise: React.FC = () => {
       </>
     );
 
-  const handleSendPhoto = (event: React.FormEvent<HTMLFormElement>) => {
-    const photos: (string | ArrayBuffer)[] | null = null;
+  const photos:
+    | {
+        id: number;
+        small?: string | undefined;
+        large?: string | undefined;
+        alt?: string | undefined;
+        authorId?: string | undefined;
+      }[]
+    | undefined = data?.getEnterprise.photos;
+
+  let choosenPhotos: (number | undefined)[] = [];
+
+  const handleSendPhoto = async (event: React.FormEvent<HTMLFormElement>) => {
+    const photos: inputPhoto[] = [];
     event.preventDefault();
     const files = photoFileItems.current?.files;
-    console.log(files?.length);
-    if (files) {
-      // photos = files.map(async (file) => (await readFile(file)))
-      //   ;
-      // console.log(typeof base64File);
-      // if (typeof base64File === 'string') {
-      // const newFile = dataURLtoFile(base64File, '1.jpg');
-      // console.log(newFile);
-      // setTest(URL.createObjectURL(newFile));
-      // }
-    }
 
-    //   const input = {
-    //     id,
-    //     title: title || undefined,
-    //     logo: logo || undefined,
-    //     description: description || undefined,
-    //     contacts: contacts || undefined,
-    //     marker:
-    //       markerValue || markerTop || markerLeft || markerCorner
-    //         ? {
-    //             value: markerValue || undefined,
-    //             top: Number(markerTop) || undefined,
-    //             left: Number(markerLeft) || undefined,
-    //             corner: markerCorner || undefined,
-    //           }
-    //         : undefined,
-    //   };
-    //
-    //   updateEnterprise({
-    //     variables: { input },
-    //   })
-    //     .then(({ data }) => {
-    //       refetch().catch((e) => console.error(e));
-    //       alert(JSON.stringify(data.updateEnterprise.content));
-    //     })
-    //     .catch((e) => console.error(e));
+    if (files && files.length > 0) {
+      for (let i = 0; i < files?.length; i += 1) {
+        const photo = {
+          img: await readFile(files?.[i], 'base64'),
+          alt: `Picture ${i}`,
+        };
+        photos.push(photo);
+      }
+      const input = {
+        id,
+        photos,
+      };
+
+      updateEnterprise({
+        variables: { input },
+      })
+        .then(({ data }) => {
+          refetch().catch((e) => console.error(e));
+          alert(JSON.stringify(data.updateEnterprise.content));
+        })
+        .catch((e) => console.error(e));
+    } else {
+      alert('Необходимо выбрать фотографии для загрузки!');
+    }
+  };
+
+  const handleChoosePhoto = (
+    event: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    id: number
+  ) => {
+    const found = choosenPhotos.find((photoId) => photoId === id);
+    if (found) {
+      _.remove(choosenPhotos, (photoId) => photoId === id);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      event.target.style.opacity = 1;
+    } else {
+      choosenPhotos.push(id);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      event.target.style.opacity = 0.5;
+    }
+    console.log(choosenPhotos);
+  };
+
+  const handleDeletePhotos = () => {
+    deletePhotos({
+      variables: { deletePhotosId: choosenPhotos },
+    })
+      .then(({ data }) => {
+        alert(JSON.stringify(data.updateEnterprise.content));
+      })
+      .catch((e) => console.error(e));
+    choosenPhotos = [];
   };
 
   return (
@@ -112,58 +147,38 @@ const Enterprise: React.FC = () => {
           </div>
         </fieldset>
       </form>
-      <hr />
 
-      {data?.getEnterprise.photos ?? (
-        <form className={'w-75 mx-auto'}>
+      {photos && photos.length > 0 && (
+        <form className={'w-75 mx-auto'} onSubmit={handleDeletePhotos}>
           <fieldset className={'form-group'}>
             <legend>Удаление фотографий</legend>
             <div className={'row'}>
-              <div
-                className={`col-12 my-0 mx-0 align-self-center ${styles.editPage_carouselContainer}`}
-              >
-                <Carousel
-                  className={`mt-2`}
-                  renderCenterLeftControls={null}
-                  renderCenterRightControls={null}
-                  wrapAround={true}
-                  slidesToShow={8}
-                  defaultControlsConfig={{
-                    pagingDotsClassName: styles.editPage_carouselDots,
-                    pagingDotsContainerClassName:
-                      styles.editPage_carouselDotsContainer,
-                  }}
-                >
-                  {data?.getEnterprise.photos.map(
-                    ({
-                      id,
-                      small,
-                      alt,
-                    }: {
-                      id: number;
-                      small?: string;
-                      alt?: string;
-                    }) => (
-                      <img
-                        src={small}
-                        alt={alt}
-                        key={id}
-                        width={'200px'}
-                        // onClick={() =>
-                        //   dispatch(
-                        //     setImages({ images: photos, currentImage: index })
-                        //   )
-                        // }
-                        className={'btn border-0 shadow-none'}
-                      />
-                    )
-                  )}
-                </Carousel>
+              <div className={`col-12 my-0 mb-3 align-self-center`}>
+                {photos.map(
+                  ({
+                    id,
+                    small,
+                    alt,
+                  }: {
+                    id: number;
+                    small?: string;
+                    alt?: string;
+                  }) => (
+                    <img
+                      src={small}
+                      alt={alt}
+                      key={id}
+                      width={'200px'}
+                      onClick={(event) => handleChoosePhoto(event, id)}
+                      className={'btn border-0 shadow-none'}
+                    />
+                  )
+                )}
               </div>
             </div>
             <div className={'row'}>
               <button
-                type='button'
+                type='submit'
                 className='btn bg-warning px-5 text-black fw-bold col-3 me-3'
               >
                 Удалить

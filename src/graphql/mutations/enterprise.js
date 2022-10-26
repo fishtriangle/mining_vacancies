@@ -24,9 +24,9 @@ export const DELETE_ENTERPRISE = gql`
   }
 `;
 
-export const DELETE_PHOTO = gql`
-  mutation deletePhoto($deletePhotoId: Int!) {
-    deletePhoto(id: $deletePhotoId) {
+export const DELETE_PHOTOS = gql`
+  mutation deletePhotos($deletePhotosId: [Int]) {
+    deletePhotos(id: $deletePhotosId) {
       content
     }
   }
