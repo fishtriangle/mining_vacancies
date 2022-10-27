@@ -1,29 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from '../Edit.module.scss';
-import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
-import { UPDATE_ENTERPRISE } from '../../graphql/mutations/enterprise';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { CREATE_NEWS, DELETE_NEWS } from '../../graphql/mutations/news';
+import { DELETE_NEWS } from '../../graphql/mutations/news';
 
 import { GET_ALL_NEWS } from '../../graphql/query/news';
 import Loader from '../../components/Loader/Loader';
 
 const News: React.FC = () => {
-  const [createNews] = useMutation(CREATE_NEWS);
   const [deleteNews] = useMutation(DELETE_NEWS);
-  const newsTitle = useRef<HTMLInputElement>(null);
-
-  const [errors, setError] = useState<{ create: string | null }>({
-    create: null,
-  });
 
   const { data, loading, error, refetch } = useQuery(GET_ALL_NEWS, {
     variables: {
       pollInterval: 3000,
     },
   });
+
+  useEffect(() => {
+    refetch().catch((e) => console.error(e));
+  }, []);
 
   if (loading) return <Loader />;
   if (error)
@@ -81,7 +76,14 @@ const News: React.FC = () => {
                 <tr key={newsItem.id}>
                   <td scope={'row'}>{index + 1}</td>
                   <td>{newsItem.title}</td>
-                  <td>{newsItem.date.toString()}</td>
+                  <td>
+                    {newsItem.date
+                      .toString()
+                      .split('T')[0]
+                      .split('-')
+                      .reverse()
+                      .join('.')}
+                  </td>
                   <td>
                     <Link
                       to={`/edit/editNews/${newsItem.id}`}

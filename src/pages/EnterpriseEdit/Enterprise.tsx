@@ -8,6 +8,7 @@ import {
 } from '../../graphql/mutations/enterprise';
 import { GET_ALL_ENTERPRISES } from '../../graphql/query/enterprise';
 import Loader from '../../components/Loader/Loader';
+import { enterprice } from '../../common/types';
 
 const Enterprise: React.FC = () => {
   const [createEnterprise] = useMutation(CREATE_ENTERPRISE);
@@ -113,7 +114,7 @@ const Enterprise: React.FC = () => {
 
           <tbody className={'overflow-auto'}>
             {data.getAllEnterprises.map(
-              (enterprise: { id: number; title: string }, index: number) => (
+              (enterprise: enterprice, index: number) => (
                 <tr key={enterprise.id}>
                   <td scope={'row'}>{index + 1}</td>
                   <td>{enterprise.title}</td>

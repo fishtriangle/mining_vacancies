@@ -1,17 +1,89 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { CREATE_NEWS } from '../../graphql/mutations/news';
+import { readFile } from '../../utilities/filesInteractions';
+import { inputPhoto } from '../../common/types';
 
 const CreateNews: React.FC = () => {
-  const fileItem = useRef<HTMLInputElement>(null);
+  const [createNews] = useMutation(CREATE_NEWS);
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [date, setDate] = useState<string | null>(null);
+
+  const [errors, setError] = useState<string | null>(null);
+
+  const photoFileItems = useRef<HTMLInputElement>(null);
+
+  const handelInputChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+    handler: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    handler(event.target.value);
+  };
+
+  const handleFormSubmit = async (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.FormEvent<HTMLTextAreaElement>
+  ) => {
+    event.preventDefault();
+
+    if (!title) {
+      setError('* Обязательное поле');
+      return;
+    }
+    setError(null);
+
+    const photos: inputPhoto[] = [];
+    const files = photoFileItems.current?.files;
+
+    if (files && files.length > 0) {
+      for (let i = 0; i < files?.length; i += 1) {
+        const photo = {
+          img: await readFile(files?.[i], 'base64'),
+          alt: `Picture ${i}`,
+        };
+        photos.push(photo);
+      }
+    }
+
+    const input = {
+      title: title || undefined,
+      description: description || undefined,
+      date: date ? `${date}T00:00:00.000Z` : undefined,
+      photos: photos,
+    };
+
+    createNews({
+      variables: { input },
+    })
+      .then(({ data }) => {
+        alert(JSON.stringify(data.createNews.content));
+        navigate('/edit/news');
+      })
+      .catch((e) => console.error(e));
+  };
 
   return (
     <>
       <h3 className={'w-75 mb-4'}>Создание новости</h3>
-      <form className={'w-75'}>
+      <form className={'w-75'} onSubmit={handleFormSubmit}>
         <div className={'form-group row mb-2'}>
-          <label className='col-3 col-form-label'>Дата публикации:</label>
+          <label htmlFor={'newsDate'} className='col-3 col-form-label'>
+            Дата публикации:
+          </label>
           <div className={'col-3'}>
-            <input type={'date'} className={'form-control'} />
+            <input
+              id={'newsDate'}
+              type={'date'}
+              className={'form-control'}
+              onChange={(event) => handelInputChange(event, setDate)}
+            />
           </div>
         </div>
 
@@ -19,25 +91,30 @@ const CreateNews: React.FC = () => {
           <label htmlFor={'newsTitle'} className='col-3 col-form-label'>
             Заголовок новости:
           </label>
-          <div className={'col-9'}>
+          <div className={'col-7'}>
             <input
               id={'newsTitle'}
-              className={'form-control'}
+              className={`form-control ${errors && 'is-invalid'}`}
               placeholder={'Напишите текст здесь...'}
+              onChange={(event) => handelInputChange(event, setTitle)}
             />
+          </div>
+          <div className={`col-2 ps-2 small ${errors && 'text-danger'}`}>
+            {errors ? errors : '* Должно быть уникальным'}
           </div>
         </div>
 
         <div className={'form-group row mb-2'}>
-          <label htmlFor='newsBody' className='col-3 col-form-label'>
+          <label htmlFor='newsDescription' className='col-3 col-form-label'>
             Текст новости:
           </label>
           <div className={'col-9'}>
             <textarea
-              id={'newsBody'}
+              id={'newsDescription'}
               rows={5}
               placeholder={'Напишите текст здесь...'}
               className={'form-control'}
+              onChange={(event) => handelInputChange(event, setDescription)}
             />
           </div>
         </div>
@@ -50,7 +127,7 @@ const CreateNews: React.FC = () => {
             <input
               className='form-control'
               type='file'
-              ref={fileItem}
+              ref={photoFileItems}
               multiple={true}
             />
           </div>

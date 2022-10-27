@@ -20,8 +20,6 @@ const EditEnterpriseDescription: React.FC = () => {
   const [markerLeft, setMarkerLeft] = useState<string | null>(null);
   const [markerCorner, setMarkerCorner] = useState<string | null>(null);
 
-  // const [test, setTest] = useState<null | string>(null);
-
   const logoFileItem = useRef<HTMLInputElement>(null);
 
   const { data, loading, error, refetch } = useQuery<
@@ -64,14 +62,7 @@ const EditEnterpriseDescription: React.FC = () => {
     const file = logoFileItem.current?.files?.[0];
 
     if (file) {
-      // console.log(file);
       logo = await readFile(file);
-      // console.log(typeof base64File);
-      // if (typeof base64File === 'string') {
-      // const newFile = dataURLtoFile(base64File, '1.jpg');
-      // console.log(newFile);
-      // setTest(URL.createObjectURL(newFile));
-      // }
     }
 
     const input = {
@@ -101,67 +92,8 @@ const EditEnterpriseDescription: React.FC = () => {
       .catch((e) => console.error(e));
   };
 
-  // const logoFromData = (logoStr: string) => {
-  //   console.log(logoStr);
-  //   if (logoStr) {
-  //     const file = dataURLtoFile(logoStr, '1.png');
-  //     return URL.createObjectURL(file);
-  //   }
-  // };
-
-  // const enterprisesInfo = useSelector(
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   // TODO state type should be written
-  //   (state) => state.enterprisesInfo.enterprises
-  // );
-
-  // const dispatch = useDispatch();
-  //
-  // const { photos } = enterprisesInfo.ametist;
-  //
-  // const fileItem = useRef<HTMLInputElement>(null);
-  //
-  // const [enterpriseId, setEnterpriseId] = useState<string | null>(null);
-  // const [enterpriseErrors, setEnterpriseErrors] = useState<string | null>(null);
-  // const [fileErrors, setFileErrors] = useState<string | null>(null);
-  //
-  // const errorsMap = {
-  //   enterprise: setEnterpriseErrors,
-  //   fileItem: setFileErrors,
-  // };
-  // const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const id: string = event.target.value;
-  //   setEnterpriseId(id);
-  // };
-  //
-  // const [updateEnterprise] = useMutation(UPDATE_ENTERPRISE);
-  //
-  // const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   Object.values(errorsMap).forEach((setError) => setError(null));
-  //
-  //   const file = fileItem.current?.files?.[0];
-  //
-  //   const errors = validateForm(enterpriseId, file);
-  //   if (errors.length > 0) {
-  //     errors.forEach(({ input, message }) => {
-  //       errorsMap[input as keyof typeof errorsMap](message);
-  //     });
-  //     return;
-  //   }
-  //
-  //   handleVacanciesFile(file, enterpriseId, updateEnterprise);
-  // };
-
   return (
     <>
-      {/*{test ? <img src={test} /> : ''}*/}
-      {/*{data?.getEnterprise.logo ? (*/}
-      {/*  <img src={logoFromData(data?.getEnterprise.logo)} />*/}
-      {/*) : (*/}
-      {/*  ''*/}
-      {/*)}*/}
       <h3 className={'w-75 mb-3 mt-0'}>Редактирование описания предприятия</h3>
       <form className={'w-75'} onSubmit={handleFormSubmit}>
         <div className={'form-group row mb-2'}>

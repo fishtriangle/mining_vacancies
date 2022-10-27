@@ -1,8 +1,10 @@
 import React from 'react';
 import Marker from './Marker';
-import { useSelector } from 'react-redux';
 
 import styles from './MarkersBlock.module.scss';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_ENTERPRISES } from '../../graphql/query/enterprise';
+import { enterprice } from '../../common/types';
 
 type PhotoItem = {
   small: string;
@@ -31,29 +33,40 @@ type EnterprisesInfoItem = {
 };
 
 const MarkersBlock: React.FC = () => {
-  const enterprisesInfo: EnterprisesInfoItem = useSelector(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // TODO: set the type of state
-    (state) => state.enterprisesInfo.enterprises
-  );
+  const { data, loading, error, refetch } = useQuery(GET_ALL_ENTERPRISES, {
+    variables: {
+      pollInterval: 3000,
+    },
+  });
+
+  if (loading) return <div></div>;
+  if (error)
+    return (
+      <>
+        <p className={'text-center'}>Ошибка загрузки списка предприятий...</p>
+        <p>{error.message}</p>
+      </>
+    );
 
   return (
     <div className={styles.markersBlock}>
-      {Object.values(enterprisesInfo).map(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        // TODO: set the type of enterprisesInfo
-        ({ id, marker: { value, position, corner } }, index) => (
-          <Marker
-            value={value}
-            position={position}
-            corner={corner}
-            key={index}
-            id={id}
-          />
-        )
-      )}
+      {data.getAllEnterprises.map((enterprise: enterprice, index: number) => (
+        <Marker
+          value={enterprise.marker?.value || ''}
+          position={{
+            top: enterprise.marker?.top || 0,
+            left: enterprise.marker?.left || 0,
+          }}
+          corner={
+            enterprise.marker?.corner ===
+            ('bottom-left' || 'top-left' || 'top-right' || 'bottom-right')
+              ? enterprise.marker?.corner
+              : 'top-left'
+          }
+          key={enterprise.id}
+          id={enterprise.id}
+        />
+      ))}
     </div>
   );
 };

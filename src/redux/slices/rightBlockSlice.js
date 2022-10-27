@@ -24,6 +24,12 @@ export const rightBlockSlice = createSlice({
     setAbout: (state) => {
       state.blockType = 'about';
     },
+    setNews: (state) => {
+      state.blockType = 'news';
+    },
+    setNewsItem: (state) => {
+      state.blockType = 'newsItem';
+    },
   },
 });
 
@@ -36,6 +42,8 @@ export const {
   setIntro,
   setEnterprise,
   setAbout,
+  setNews,
+  setNewsItem,
 } = rightBlockSlice.actions;
 
 export default rightBlockSlice.reducer;

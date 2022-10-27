@@ -5,6 +5,7 @@ import React from 'react';
 import styles from './VacanciesBlock.module.scss';
 import {
   resetVacancies,
+  selectCurrentId,
   selectIsVacanciesShown,
   showVacancies,
 } from '../../redux/slices/vacanciesSlice';
@@ -13,6 +14,10 @@ import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
 import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
 import Text from '../Text/Text';
+import { useQuery } from '@apollo/client';
+import { getEnterprise, getEnterpriseVars } from '../../common/types';
+import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
+import Loader from '../Loader/Loader';
 
 const btnLabel = {
   vacancies: 'вакансии',
@@ -23,13 +28,35 @@ const VacanciesBlock: React.FC = () => {
   const dispatch = useDispatch();
 
   const isVacanciesShown = useSelector(selectIsVacanciesShown);
-  const { title, contacts } = useSelector(selectCurrentEnterprise);
+  const id = useSelector(selectCurrentId);
+  console.log(typeof id);
 
   const [dataBlockType, setDataBlockType] = useState<string>('вакансии');
 
   useEffect(() => {
     setTimeout(() => dispatch(showVacancies()), 0);
   });
+
+  const { data, loading, error, refetch } = useQuery<
+    getEnterprise,
+    getEnterpriseVars
+  >(GET_ONE_ENTERPRISE, {
+    variables: {
+      pollInterval: 3000,
+      id,
+    },
+  });
+
+  if (loading) return <Loader />;
+  if (error)
+    return (
+      <>
+        <p className={'text-center'}>
+          Ошибка загрузки информации о предприятии...
+        </p>
+        <p>{error.message}</p>
+      </>
+    );
 
   const handleContactsClick = () => {
     setDataBlockType(
@@ -70,7 +97,7 @@ const VacanciesBlock: React.FC = () => {
           >
             Вакантные должности
             <br />
-            <Text>{title}</Text>
+            <Text>{data?.getEnterprise.title}</Text>
           </h3>
           <CloseBtn
             closeAction={() => dispatch(resetVacancies())}
@@ -81,18 +108,20 @@ const VacanciesBlock: React.FC = () => {
         {dataBlockType === 'контакты' && (
           <>
             <div className={'fs-4 my-6 m-auto w-70'}>
-              {contacts.length === 1 ? (
+              {data?.getEnterprise.contacts?.split(';').length === 1 ? (
                 <p>По вопросам трудоустройства обращаться по телефону: </p>
               ) : (
                 <p>По вопросам трудоустройства обращаться по телефонам: </p>
               )}
 
               <ul className={'list-unstyled'}>
-                {contacts.map((contact: string, index: number) => (
-                  <li key={index} className={'fw-bold'}>
-                    {contact}
-                  </li>
-                ))}
+                {data?.getEnterprise.contacts
+                  ?.split(';')
+                  .map((contact: string, index: number) => (
+                    <li key={index} className={'fw-bold'}>
+                      {contact}
+                    </li>
+                  ))}
               </ul>
             </div>
           </>
@@ -100,7 +129,9 @@ const VacanciesBlock: React.FC = () => {
 
         {dataBlockType === 'вакансии' && (
           <div className={styles.VacanciesList_table}>
-            <VacanciesList />
+            {data?.getEnterprise.vacancies && (
+              <VacanciesList vacancies={data?.getEnterprise.vacancies} />
+            )}
           </div>
         )}
       </div>

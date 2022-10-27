@@ -5,6 +5,13 @@ export const GET_ALL_ENTERPRISES = gql`
     getAllEnterprises {
       id
       title
+      marker {
+        id
+        value
+        top
+        left
+        corner
+      }
     }
   }
 `;

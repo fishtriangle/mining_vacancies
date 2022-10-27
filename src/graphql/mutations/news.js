@@ -25,8 +25,8 @@ export const DELETE_NEWS = gql`
 `;
 
 export const DELETE_NEWS_PHOTO = gql`
-  mutation deleteNewsPhoto($deleteNewsPhotoId: Int!) {
-    deleteNewsPhoto(id: $deleteNewsPhotoId) {
+  mutation deleteNewsPhoto($deleteNewsPhotosId: [Int]) {
+    deleteNewsPhotos(id: $deleteNewsPhotosId) {
       content
     }
   }

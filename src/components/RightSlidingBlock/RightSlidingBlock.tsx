@@ -9,15 +9,20 @@ import {
   selectType,
 } from '../../redux/slices/rightBlockSlice';
 import AboutBlock from '../AboutBlock/AboutBlock';
+import NewsBlock from '../NewsBlock/NewsBlock';
+import NewsItemBlock from '../NewsItemBlock/NewsItemBlock';
 
 const RightSlidingBlock: React.FC = () => {
   const isHide = useSelector(selectRightBlockIsHide);
-  const blockType: 'intro' | 'enterprise' | 'about' = useSelector(selectType);
+  const blockType: 'intro' | 'enterprise' | 'about' | 'news' | 'newsItem' =
+    useSelector(selectType);
 
   const blockMap = {
     intro: <IntroBlock />,
     enterprise: <EnterpriseBlock />,
     about: <AboutBlock />,
+    news: <NewsBlock />,
+    newsItem: <NewsItemBlock />,
   };
 
   return (

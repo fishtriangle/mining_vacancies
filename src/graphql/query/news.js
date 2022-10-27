@@ -6,20 +6,12 @@ export const GET_ALL_NEWS = gql`
       date
       id
       title
-      description
-      photos {
-        id
-        small
-        large
-        alt
-        newsId
-      }
     }
   }
 `;
 
 export const GET_ONE_NEWS = gql`
-  query getNews($id: ID) {
+  query getNews($id: Int) {
     getNews(id: $id) {
       id
       date

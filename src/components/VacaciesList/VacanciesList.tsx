@@ -1,6 +1,4 @@
 import { useSelector } from 'react-redux';
-import { useQuery } from '@apollo/client';
-import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
 import React from 'react';
 
 import Text from '../Text/Text';
@@ -8,32 +6,15 @@ import { selectCurrentId } from '../../redux/slices/vacanciesSlice';
 
 type Vacancy = {
   id: number;
-  vacancy: string;
-  requirements: string;
-  docs: string;
-  salary: string;
+  vacancy?: string;
+  requirements?: string;
+  docs?: string;
+  salary?: string;
 };
 
-const VacanciesList: React.FC = () => {
-  const currentId = useSelector(selectCurrentId);
-
-  const { data, loading, error } = useQuery(GET_ONE_ENTERPRISE, {
-    variables: {
-      id: `${currentId}`,
-      pollInterval: 3000,
-    },
-  });
-
-  if (loading) return <p className={'text-center'}>Загрузка...</p>;
-  if (error)
-    return (
-      <>
-        <p className={'text-center'}>Ошибка загрузки вакансий...</p>
-        <p>{error.message}</p>
-      </>
-    );
-
-  const { vacancies } = data['getEnterprise'];
+const VacanciesList: React.FC<{
+  vacancies: Vacancy[];
+}> = ({ vacancies }: { vacancies: Vacancy[] }) => {
   return (
     <table className={'table fs-4 m-0 text-primary border-primary'}>
       <thead>

@@ -7,6 +7,7 @@ import YellowBtn from '../YellowBtn/YellowBtn';
 import { useDispatch } from 'react-redux';
 import {
   hideRightBlock,
+  setNews,
   showRightBlock,
 } from '../../redux/slices/rightBlockSlice';
 
@@ -18,6 +19,14 @@ const AboutBlock: React.FC = () => {
     dispatch(hideRightBlock());
     setTimeout(() => {
       setShowDevelop(!showDevelop);
+      dispatch(showRightBlock());
+    }, 1500);
+  };
+
+  const handleNewsClick = () => {
+    dispatch(hideRightBlock());
+    setTimeout(() => {
+      dispatch(setNews());
       dispatch(showRightBlock());
     }, 1500);
   };
@@ -113,7 +122,7 @@ const AboutBlock: React.FC = () => {
           text={showDevelop ? 'О Компании' : 'Устойчивое развитие'}
           onClick={handleDevelopmentClick}
         />
-        <YellowBtn text={'Новости'} onClick={() => 1} />
+        <YellowBtn text={'Новости'} onClick={handleNewsClick} />
       </div>
     </div>
   );

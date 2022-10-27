@@ -10,6 +10,7 @@ import {
   getEnterprise,
   getEnterpriseVars,
   inputPhoto,
+  photo,
 } from '../../common/types';
 import { GET_ONE_ENTERPRISE } from '../../graphql/query/enterprise';
 import Loader from '../../components/Loader/Loader';
@@ -42,15 +43,7 @@ const Enterprise: React.FC = () => {
       </>
     );
 
-  const photos:
-    | {
-        id: number;
-        small?: string | undefined;
-        large?: string | undefined;
-        alt?: string | undefined;
-        authorId?: string | undefined;
-      }[]
-    | undefined = data?.getEnterprise.photos;
+  const photos: photo[] | undefined = data?.getEnterprise.photos;
 
   let choosenPhotos: (number | undefined)[] = [];
 
@@ -101,7 +94,6 @@ const Enterprise: React.FC = () => {
       // @ts-ignore
       event.target.style.opacity = 0.5;
     }
-    console.log(choosenPhotos);
   };
 
   const handleDeletePhotos = () => {

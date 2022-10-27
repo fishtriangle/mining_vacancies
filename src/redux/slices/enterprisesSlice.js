@@ -18,26 +18,24 @@ const initialState = {
     // kymroch: { ..._.cloneDeep(kymroch), vacancies: null },
   },
   current: null,
+  currentNews: null,
 };
 
 export const enterprisesSlice = createSlice({
   name: 'enterprises',
   initialState,
   reducers: {
-    updateEnterprise: (state, action) => {
-      const [enterprise, description] = action.payload;
-      state['enterprises'][enterprise] = description;
-    },
     setCurrent: (state, action) => {
-      state.current = Object.values(state.enterprises).find(
-        ({ id }) => id === Number(action.payload)
-      );
+      state.current = Number(action.payload);
+    },
+    setCurrentNews: (state, action) => {
+      state.currentNews = Number(action.payload);
     },
   },
 });
 
 export const selectCurrentEnterprise = (state) => state.enterprisesInfo.current;
 
-export const { updateEnterprise, setCurrent } = enterprisesSlice.actions;
+export const { setCurrent } = enterprisesSlice.actions;
 
 export default enterprisesSlice.reducer;
