@@ -29,7 +29,6 @@ export const readFile: (
 export const dataURLtoFile = (dataUrl: string, filename: string) => {
   const arr = dataUrl.split(',');
   const mime = arr[0].match(/:(.*?);/)?.[1];
-  console.log('Mime: ', mime);
   const bstr = Buffer.from(arr[1], 'base64');
 
   return new File([new Uint8Array(bstr)], filename, { type: mime });

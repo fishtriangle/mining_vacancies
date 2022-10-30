@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from '../Edit.module.scss';
 import { useMutation, useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -87,13 +87,13 @@ const News: React.FC = () => {
                   <td>
                     <Link
                       to={`/edit/editNews/${newsItem.id}`}
-                      className='btn btn-sm bg-white text-black fw-bold me-2'
+                      className='btn btn-sm bg-white text-black fw-bold me-2 mb-2'
                     >
                       Редактировать
                     </Link>
                     <button
                       type='button'
-                      className='btn btn-sm bg-warning text-black fw-bold'
+                      className='btn btn-sm bg-warning text-black fw-bold mb-2'
                       onClick={() => handleDeleteNewsClick(newsItem.id)}
                     >
                       Удалить

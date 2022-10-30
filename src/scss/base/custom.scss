@@ -46,6 +46,14 @@
   height: 60%!important;
 }
 
+.h-75 {
+  height: 75%!important;
+}
+
+.h-80 {
+  height: 80%!important;
+}
+
 .w-70 {
   width: 70%!important;
 }
@@ -61,6 +69,24 @@
 .add-scrollbar {
   overflow-y: scroll;
   height: 72%;
+  padding-right: 15px;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #ffffff;
+    border-radius: 20px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #FFC40B;
+    border-radius: 20px;
+  }
+}
+
+.add-scrollbar-custom {
+  overflow-y: scroll;
+  height: 87%;
   padding-right: 15px;
 
   &::-webkit-scrollbar {

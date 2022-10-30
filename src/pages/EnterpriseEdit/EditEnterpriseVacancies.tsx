@@ -39,7 +39,6 @@ const EditEnterpriseVacancies: React.FC = () => {
     } else if (file) {
       setFileErrors(null);
       vacanciesStr = await readFile(file, 'string');
-      console.log(vacanciesStr);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       vacancies = parse(vacanciesStr, {

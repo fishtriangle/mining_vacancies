@@ -2,19 +2,20 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_NEWS } from '../../graphql/query/news';
 import Loader from '../Loader/Loader';
-import styles from '../../pages/Edit.module.scss';
+import styles from './NewsBlock.module.scss';
 import CloseBtn from '../CloseBtn/CloseBtn';
 import {
   hideRightBlock,
+  setAbout,
   setNewsItem,
   showRightBlock,
 } from '../../redux/slices/rightBlockSlice';
-import { setCurrent } from '../../redux/slices/enterprisesSlice';
+import { setCurrentNews } from '../../redux/slices/enterprisesSlice';
 import { useDispatch } from 'react-redux';
 
 const NewsBlock: React.FC = () => {
   const dispatch = useDispatch();
-  const { data, loading, error, refetch } = useQuery(GET_ALL_NEWS, {
+  const { data, loading, error } = useQuery(GET_ALL_NEWS, {
     variables: {
       pollInterval: 3000,
     },
@@ -33,22 +34,30 @@ const NewsBlock: React.FC = () => {
     dispatch(hideRightBlock());
     setTimeout(() => {
       dispatch(setNewsItem());
-      dispatch(setCurrent(id));
+      dispatch(setCurrentNews(id));
+      dispatch(showRightBlock());
+    }, 1500);
+  };
+
+  const handleCloseClick = () => {
+    dispatch(hideRightBlock());
+    setTimeout(() => {
+      dispatch(setAbout());
       dispatch(showRightBlock());
     }, 1500);
   };
 
   return (
     <div className={`d-flex justify-content-center flex-column text-white`}>
-      <div className={`mb-4 block-bg h-75 w-950p`}>
+      <div className={`mb-4 block-bg h-80 w-950p`}>
         <div className={'d-flex flex-row justify-content-end mb-3'}>
-          <CloseBtn />
+          <CloseBtn closeAction={() => handleCloseClick()} />
         </div>
         <div>
           <p className={'text-uppercase text-primary fs-2 fw-bold mb-3'}>
             Новости
           </p>
-          <div className={`${styles.editPage_tableContainer}`}>
+          <div className={`${styles.NewsBlock_tableContainer}`}>
             <table className={'table text-primary border-primary'}>
               <thead>
                 <tr>
@@ -61,7 +70,10 @@ const NewsBlock: React.FC = () => {
               <tbody className={'overflow-auto'}>
                 {data.getAllNews.map(
                   (newsItem: { id: number; date: Date; title: string }) => (
-                    <tr key={newsItem.id}>
+                    <tr
+                      key={newsItem.id}
+                      onClick={() => handleClick(newsItem.id)}
+                    >
                       <td className={'py-3'}>
                         {newsItem.date
                           .toString()
@@ -70,16 +82,7 @@ const NewsBlock: React.FC = () => {
                           .reverse()
                           .join('.')}
                       </td>
-                      <td className={'py-3'}>{newsItem.title}</td>
-                      <td>
-                        <button
-                          type={'button'}
-                          className='btn btn-sm bg-warning text-black fw-bold mt-1'
-                          onClick={() => handleClick(newsItem.id)}
-                        >
-                          Посмотреть
-                        </button>
-                      </td>
+                      <td className={'py-3 text-white'}>{newsItem.title}</td>
                     </tr>
                   )
                 )}

@@ -35,7 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "run-build": "concurrently \"serve -s build\" \"cd ../mining_vacancies_back && node index\" \"start explorer.exe .\\Kiosk.lnk\""
+    "run-build": "concurrently \"serve -s build\" \"cd ../mining_vacancies_back && node src/server\" \"start explorer.exe .\\Kiosk.lnk\""
   },
   "eslintConfig": {
     "extends": [

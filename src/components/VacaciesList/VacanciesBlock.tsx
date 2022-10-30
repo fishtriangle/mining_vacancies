@@ -10,7 +10,6 @@ import {
   showVacancies,
 } from '../../redux/slices/vacanciesSlice';
 import VacanciesList from './VacanciesList';
-import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
 import YellowBtn from '../YellowBtn/YellowBtn';
 import CloseBtn from '../CloseBtn/CloseBtn';
 import Text from '../Text/Text';
@@ -29,7 +28,6 @@ const VacanciesBlock: React.FC = () => {
 
   const isVacanciesShown = useSelector(selectIsVacanciesShown);
   const id = useSelector(selectCurrentId);
-  console.log(typeof id);
 
   const [dataBlockType, setDataBlockType] = useState<string>('вакансии');
 
@@ -37,15 +35,15 @@ const VacanciesBlock: React.FC = () => {
     setTimeout(() => dispatch(showVacancies()), 0);
   });
 
-  const { data, loading, error, refetch } = useQuery<
-    getEnterprise,
-    getEnterpriseVars
-  >(GET_ONE_ENTERPRISE, {
-    variables: {
-      pollInterval: 3000,
-      id,
-    },
-  });
+  const { data, loading, error } = useQuery<getEnterprise, getEnterpriseVars>(
+    GET_ONE_ENTERPRISE,
+    {
+      variables: {
+        pollInterval: 3000,
+        id,
+      },
+    }
+  );
 
   if (loading) return <Loader />;
   if (error)

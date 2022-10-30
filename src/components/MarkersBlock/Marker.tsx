@@ -91,7 +91,6 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
       pointer: styles.markersBlock_bottomRightCorner,
     },
   };
-
   return (
     <div
       className={`position-absolute ${styles.markersBlock_marker} ${

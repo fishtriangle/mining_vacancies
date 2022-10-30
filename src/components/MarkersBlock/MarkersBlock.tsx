@@ -6,34 +6,8 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_ENTERPRISES } from '../../graphql/query/enterprise';
 import { enterprice } from '../../common/types';
 
-type PhotoItem = {
-  small: string;
-  large?: string;
-  alt?: string;
-};
-
-type PositionItem = {
-  top: number;
-  left: number;
-};
-
-type MarkerItem = {
-  value: string;
-  position: PositionItem;
-  corner?: string;
-};
-
-type EnterprisesInfoItem = {
-  id: number;
-  title?: string;
-  photos?: PhotoItem[];
-  logo?: string;
-  marker?: MarkerItem;
-  contacts?: string[];
-};
-
 const MarkersBlock: React.FC = () => {
-  const { data, loading, error, refetch } = useQuery(GET_ALL_ENTERPRISES, {
+  const { data, loading, error } = useQuery(GET_ALL_ENTERPRISES, {
     variables: {
       pollInterval: 3000,
     },
@@ -50,16 +24,20 @@ const MarkersBlock: React.FC = () => {
 
   return (
     <div className={styles.markersBlock}>
-      {data.getAllEnterprises.map((enterprise: enterprice, index: number) => (
+      {data.getAllEnterprises.map((enterprise: enterprice) => (
         <Marker
           value={enterprise.marker?.value || ''}
           position={{
-            top: enterprise.marker?.top || 0,
-            left: enterprise.marker?.left || 0,
+            top: (enterprise.marker?.top || 0) / 100,
+            left: (enterprise.marker?.left || 0) / 100,
           }}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           corner={
-            enterprise.marker?.corner ===
-            ('bottom-left' || 'top-left' || 'top-right' || 'bottom-right')
+            data.getAllEnterprises[0].marker?.corner === 'bottom-left' ||
+            data.getAllEnterprises[0].marker?.corner === 'top-left' ||
+            data.getAllEnterprises[0].marker?.corner === 'top-right' ||
+            data.getAllEnterprises[0].marker?.corner === 'bottom-right'
               ? enterprise.marker?.corner
               : 'top-left'
           }

@@ -6,14 +6,7 @@ import Carousel from 'nuka-carousel';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_NEWS_PHOTO, UPDATE_NEWS } from '../../graphql/mutations/news';
-import {
-  getEnterprise,
-  getEnterpriseVars,
-  getNews,
-  getNewsVars,
-  inputPhoto,
-} from '../../common/types';
-
+import { getNews, getNewsVars, inputPhoto } from '../../common/types';
 import Loader from '../../components/Loader/Loader';
 import { GET_ONE_NEWS } from '../../graphql/query/news';
 import { readFile } from '../../utilities/filesInteractions';

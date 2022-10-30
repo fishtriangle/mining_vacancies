@@ -1,8 +1,6 @@
-import { useSelector } from 'react-redux';
 import React from 'react';
 
 import Text from '../Text/Text';
-import { selectCurrentId } from '../../redux/slices/vacanciesSlice';
 
 type Vacancy = {
   id: number;
@@ -29,9 +27,9 @@ const VacanciesList: React.FC<{
 
       <tbody className={'overflow-auto'}>
         {vacancies.map(
-          ({ id, vacancy, requirements, docs, salary }: Vacancy) => (
+          ({ id, vacancy, requirements, docs, salary }: Vacancy, index) => (
             <tr key={id}>
-              <td scope={'row'}>{id}</td>
+              <td scope={'row'}>{index + 1}</td>
               <td>{vacancy}</td>
               <td>
                 <Text>{requirements || ''}</Text>

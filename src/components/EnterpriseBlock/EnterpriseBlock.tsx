@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import { setImages } from '../../redux/slices/fullScreenImageSlice';
-import EnterpriseDescription from './EnterpriseDescription';
 import styles from './EnterpriseBlock.module.scss';
 import { setCurrentId } from '../../redux/slices/vacanciesSlice';
 import { selectCurrentEnterprise } from '../../redux/slices/enterprisesSlice';
@@ -25,15 +24,15 @@ const EnterpriseBlock: React.FC = () => {
     }
   }
 
-  const { data, loading, error, refetch } = useQuery<
-    getEnterprise,
-    getEnterpriseVars
-  >(GET_ONE_ENTERPRISE, {
-    variables: {
-      pollInterval: 3000,
-      id,
-    },
-  });
+  const { data, loading, error } = useQuery<getEnterprise, getEnterpriseVars>(
+    GET_ONE_ENTERPRISE,
+    {
+      variables: {
+        pollInterval: 3000,
+        id,
+      },
+    }
+  );
 
   if (loading) return <Loader />;
   if (error)
@@ -45,7 +44,6 @@ const EnterpriseBlock: React.FC = () => {
         <p>{error.message}</p>
       </>
     );
-  console.log(data?.getEnterprise.id);
 
   const photos: photo[] | undefined = data?.getEnterprise.photos;
 
