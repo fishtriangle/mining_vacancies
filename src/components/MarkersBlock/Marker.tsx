@@ -96,7 +96,10 @@ const Marker: React.FC<MarkerProps> = ({ value, position, corner, id }) => {
       className={`position-absolute ${styles.markersBlock_marker} ${
         id === currentId && styles.markersBlock_marker__checked
       }`}
-      style={labelParams[corner].containerStyle(position)}
+      style={
+        labelParams[corner]?.containerStyle(position) ||
+        labelParams['bottom-right'].containerStyle(position)
+      }
       onClick={() => !isClosed && id !== currentId && handleClick(id)}
     >
       <p

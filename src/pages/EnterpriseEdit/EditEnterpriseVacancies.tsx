@@ -44,6 +44,7 @@ const EditEnterpriseVacancies: React.FC = () => {
       vacancies = parse(vacanciesStr, {
         columns: ['vacancy', 'requirements', 'docs', 'salary'],
         from_line: 2,
+        delimiter: [';', ','],
       });
 
       const input = {
